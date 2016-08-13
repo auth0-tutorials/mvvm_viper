@@ -29,7 +29,7 @@
         <!--Contacts-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MVVM_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ContactsViewController" customModule="MVVM_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -89,7 +89,7 @@
         <!--New Contact-->
         <scene sceneID="tLZ-gM-Szl">
             <objects>
-                <viewController id="k1Q-Qo-l2E" customClass="ViewController" customModule="MVVM_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="k1Q-Qo-l2E" customClass="AddContactViewController" customModule="MVVM_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bDs-dZ-aqJ"/>
                         <viewControllerLayoutGuide type="bottom" id="0jZ-3C-xAG"/>
