@@ -11,8 +11,23 @@ import Foundation
 
 class ContactsViewController: UIViewController {
 
+    @IBOutlet var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView()
+    }
+
+}
+
+extension ContactsViewController: UITableViewDataSource {
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
     }
 
 }
