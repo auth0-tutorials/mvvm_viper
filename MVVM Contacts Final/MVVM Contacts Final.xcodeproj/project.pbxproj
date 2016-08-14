@@ -16,7 +16,7 @@
 		8D660A151D60AC1A00F3D26B /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A0B1D60AC1A00F3D26B /* Contact.swift */; };
 		8D660A161D60AC1A00F3D26B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A0C1D60AC1A00F3D26B /* ContactsViewController.swift */; };
 		8D660A171D60AC1A00F3D26B /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A0D1D60AC1A00F3D26B /* ContactsViewModel.swift */; };
-		8D660A181D60AC1A00F3D26B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D660A0E1D60AC1A00F3D26B /* Info.plist */; };
+		8D660A1C1D61158000F3D26B /* Array+Insertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A1B1D61158000F3D26B /* Array+Insertion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +30,7 @@
 		8D660A0C1D60AC1A00F3D26B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		8D660A0D1D60AC1A00F3D26B /* ContactsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		8D660A0E1D60AC1A00F3D26B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D660A1B1D61158000F3D26B /* Array+Insertion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Insertion.swift"; sourceTree = "<group>"; };
 		8D676C7E1D5FBB3300F3B088 /* MVVM Contacts Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM Contacts Final.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -47,18 +48,35 @@
 		8D660A021D60AC1A00F3D26B /* MVVM Contacts Final */ = {
 			isa = PBXGroup;
 			children = (
-				8D660A031D60AC1A00F3D26B /* AddContactViewController.swift */,
-				8D660A041D60AC1A00F3D26B /* AddContactViewModel.swift */,
+				8D660A1A1D60ADDB00F3D26B /* Contacts */,
+				8D660A191D60ADD100F3D26B /* Add Contact */,
 				8D660A051D60AC1A00F3D26B /* AppDelegate.swift */,
 				8D660A061D60AC1A00F3D26B /* Assets.xcassets */,
 				8D660A071D60AC1A00F3D26B /* LaunchScreen.storyboard */,
 				8D660A091D60AC1A00F3D26B /* Main.storyboard */,
 				8D660A0B1D60AC1A00F3D26B /* Contact.swift */,
-				8D660A0C1D60AC1A00F3D26B /* ContactsViewController.swift */,
-				8D660A0D1D60AC1A00F3D26B /* ContactsViewModel.swift */,
 				8D660A0E1D60AC1A00F3D26B /* Info.plist */,
+				8D660A1B1D61158000F3D26B /* Array+Insertion.swift */,
 			);
 			path = "MVVM Contacts Final";
+			sourceTree = "<group>";
+		};
+		8D660A191D60ADD100F3D26B /* Add Contact */ = {
+			isa = PBXGroup;
+			children = (
+				8D660A031D60AC1A00F3D26B /* AddContactViewController.swift */,
+				8D660A041D60AC1A00F3D26B /* AddContactViewModel.swift */,
+			);
+			name = "Add Contact";
+			sourceTree = "<group>";
+		};
+		8D660A1A1D60ADDB00F3D26B /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				8D660A0C1D60AC1A00F3D26B /* ContactsViewController.swift */,
+				8D660A0D1D60AC1A00F3D26B /* ContactsViewModel.swift */,
+			);
+			name = Contacts;
 			sourceTree = "<group>";
 		};
 		8D676C751D5FBB3200F3B088 = {
@@ -135,7 +153,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D660A181D60AC1A00F3D26B /* Info.plist in Resources */,
 				8D660A141D60AC1A00F3D26B /* Main.storyboard in Resources */,
 				8D660A121D60AC1A00F3D26B /* Assets.xcassets in Resources */,
 				8D660A131D60AC1A00F3D26B /* LaunchScreen.storyboard in Resources */,
@@ -149,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D660A1C1D61158000F3D26B /* Array+Insertion.swift in Sources */,
 				8D660A151D60AC1A00F3D26B /* Contact.swift in Sources */,
 				8D660A171D60AC1A00F3D26B /* ContactsViewModel.swift in Sources */,
 				8D660A111D60AC1A00F3D26B /* AppDelegate.swift in Sources */,

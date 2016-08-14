@@ -13,9 +13,18 @@ class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
 
+    let viewModel = ContactsViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        viewModel.feedback = self
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let addContactNavigationController = segue.destinationViewController as? UINavigationController
+        let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
+        addContactVC?.delegate = viewModel
     }
 
 }
@@ -23,11 +32,23 @@ class ContactsViewController: UIViewController {
 extension ContactsViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+        cell.textLabel?.text = viewModel.contactFullName(at: indexPath.row)
+        return cell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.contactsCount
     }
 
+}
+
+extension ContactsViewController: ContactsViewModelProtocol {
+
+    func didInsertContact(withFullName fullName: String, at index: Int) {
+        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        tableView.endUpdates()
+    }
 }

@@ -8,6 +8,34 @@
 
 import Foundation
 
+protocol ContactsViewModelProtocol: class {
+    func didInsertContact(withFullName fullName: String, at index: Int)
+}
+
 class ContactsViewModel {
 
+    weak var feedback: ContactsViewModelProtocol?
+    private var contacts: [Contact] = [Contact(firstName: "Alan", lastName: "Smith"),
+                                       Contact(firstName: "Beatrice", lastName: "Davies"),
+                                       Contact(firstName: "Chloe", lastName: "Brown"),
+                                       Contact(firstName: "Daniel", lastName: "Williams"),
+                                       Contact(firstName: "Edward", lastName: "Robinson"),
+                                       Contact(firstName: "Frankie", lastName: "Walker"), ]
+
+    var contactsCount: Int {
+        return contacts.count
+    }
+
+    func contactFullName(at index: Int) -> String {
+        let contact = contacts[index]
+        return contact.fullName
+    }
+}
+
+extension ContactsViewModel: AddContactViewModelDelegate {
+    func didAddContact(contact: Contact) {
+        let insertionIndex = contacts.insertionIndexOf(contact) { $0 < $1 }
+        contacts.insert(contact, atIndex: insertionIndex)
+        feedback?.didInsertContact(withFullName: contact.fullName, at: insertionIndex)
+    }
 }

@@ -7,3 +7,34 @@
 //
 
 import Foundation
+
+public struct Contact: Equatable {
+    var firstName = ""
+    var lastName = ""
+
+    var fullName: String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+}
+
+public func ==(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName == rhs.fullName
+}
+
+public func <(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName < rhs.fullName
+}
+
+public func >(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName > rhs.fullName
+}
+
+public func <=(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName <= rhs.fullName
+}
+
+public func >=(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName >= rhs.fullName
+}

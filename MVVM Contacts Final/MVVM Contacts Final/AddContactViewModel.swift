@@ -8,14 +8,15 @@
 
 import Foundation
 
-protocol AddContactViewModelProtocol: class {
-
+protocol AddContactViewModelDelegate: class {
+    func didAddContact(contact: Contact)
 }
 
 class AddContactViewModel {
+    weak var delegate: AddContactViewModelDelegate?
 
-    init() {
-
+    func addNewContact(firstName firstName: String, lastName: String) {
+        let contact = Contact(firstName: firstName, lastName: lastName)
+        delegate?.didAddContact(contact)
     }
-
 }

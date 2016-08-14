@@ -9,16 +9,26 @@
 import Foundation
 import UIKit
 
+
 class AddContactViewController: UIViewController {
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let viewModel = AddContactViewModel()
+    weak var delegate: AddContactViewModelDelegate? {
+        didSet {
+            viewModel.delegate = delegate
+        }
     }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+        guard let firstName = firstNameTextField.text else {
+            return
+        }
+        guard let lastName = lastNameTextField.text else {
+            return
+        }
+        viewModel.addNewContact(firstName: firstName, lastName: lastName)
         dismissViewControllerAnimated(true, completion: nil)
     }
 
