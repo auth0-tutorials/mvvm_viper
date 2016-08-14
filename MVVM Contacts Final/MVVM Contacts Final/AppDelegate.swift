@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  MVVM Contacts Final
+//  MVVM Contacts Starter
 //
 //  Created by Rafael Sacchi on 8/13/16.
 //  Copyright © 2016 Rafael Sacchi. All rights reserved.

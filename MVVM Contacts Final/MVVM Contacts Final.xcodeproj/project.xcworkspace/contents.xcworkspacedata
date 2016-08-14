@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MVVM Contacts Final.xcodeproj">
+      location = "self:/Users/rafaelsacchi/Projects/auth0/mvvm_viper/MVVM Contacts Final/MVVM Contacts Final.xcodeproj">
    </FileRef>
 </Workspace>
