@@ -30,7 +30,7 @@ tags:
 
 However, you problably know that projects can be highly complex: handling network requests, parsing responses, accessing data models, formatting data for the interface, responding to interface events, and so on. You'll end up with enormous Controllers, responsible for all these different things and not reusable at all. In other words, MVC is a nightmare for developers in charge of the maintenance of a project. But how can we accomplish a better separation of concerns and reusability for iOS projects?
 
-We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [_Massive View Controller_](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how these two different architectures are structured, build an example application and compare when it's the case to use one or the other.
+We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [Massive View Controller](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how these two different architectures are structured, build an example application and compare when it's the case to use one or the other.
 
 ## MVVM with example
 
@@ -54,8 +54,9 @@ For something that looks like this:
 
 Now it's time to get hands dirty to grasp the new concepts. So let's build an example app structured using MVVM!
 
-### Search app
+### Contacts App
 
+![Test](img/contacts.png)
 
 ## VIPER with example
 
@@ -75,7 +76,7 @@ VIPER is an application of the [Clean Architecture](https://8thlight.com/blog/un
 
 5. Router - The navigation logic of the application. It might not seem an important layer, but if you have to reuse the same iPhone views in a iPad, the only thing that might change is the way that the views are presented. This lets your other layers untouched, and the Router is responsible for the navigation flow in each situation.
 
-Comparing to MV_X_ styles, Viper has a few key differences in the distribution of responsibilities:
+Comparing to MVX styles, Viper has a few key differences in the distribution of responsibilities:
 - It introduces Router, the layer responsible for the navigation flow.
 - Entities are plain data structures, transferring the access logic that usually belongs to Model to the Interactor.
 - ViewModel (and Controller in MVC) responsibilities are shared among Interactor and Presenter.
