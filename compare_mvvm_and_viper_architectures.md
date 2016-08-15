@@ -56,7 +56,7 @@ Now it's time to get hands dirty to grasp the new concepts. So let's build an ex
 
 ### Contacts App
 
-![Test](img/contacts.png)
+<img src="img/contacts.png" width="300">
 
 ## VIPER with example
 
