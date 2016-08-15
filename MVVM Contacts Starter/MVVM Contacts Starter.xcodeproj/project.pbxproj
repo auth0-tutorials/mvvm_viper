@@ -11,6 +11,7 @@
 		8D6609E41D5FCCE900F3D26B /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6609DE1D5FCCE900F3D26B /* AddContactViewModel.swift */; };
 		8D6609E61D5FCE9400F3D26B /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6609E51D5FCE9400F3D26B /* Contact.swift */; };
 		8D6609E81D5FD22100F3D26B /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6609E71D5FD22100F3D26B /* ContactsViewModel.swift */; };
+		8D660A1E1D61566B00F3D26B /* Array+Insertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A1D1D61566B00F3D26B /* Array+Insertion.swift */; };
 		8D676C821D5FBB3300F3B088 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D676C811D5FBB3300F3B088 /* AppDelegate.swift */; };
 		8D676C841D5FBB3300F3B088 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D676C831D5FBB3300F3B088 /* ContactsViewController.swift */; };
 		8D676C871D5FBB3300F3B088 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D676C851D5FBB3300F3B088 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		8D6609DE1D5FCCE900F3D26B /* AddContactViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		8D6609E51D5FCE9400F3D26B /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		8D6609E71D5FD22100F3D26B /* ContactsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		8D660A1D1D61566B00F3D26B /* Array+Insertion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Insertion.swift"; sourceTree = "<group>"; };
 		8D676C7E1D5FBB3300F3B088 /* MVVM Contacts Starter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM Contacts Starter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D676C811D5FBB3300F3B088 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D676C831D5FBB3300F3B088 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		8D676C801D5FBB3300F3B088 /* MVVM Contacts Starter */ = {
 			isa = PBXGroup;
 			children = (
+				8D660A1D1D61566B00F3D26B /* Array+Insertion.swift */,
 				8D6609D81D5FCCC400F3D26B /* New Contact */,
 				8D6609D71D5FCCBD00F3D26B /* Contacts */,
 				8D676C811D5FBB3300F3B088 /* AppDelegate.swift */,
@@ -163,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D660A1E1D61566B00F3D26B /* Array+Insertion.swift in Sources */,
 				8D6609E41D5FCCE900F3D26B /* AddContactViewModel.swift in Sources */,
 				8D6609E81D5FD22100F3D26B /* ContactsViewModel.swift in Sources */,
 				8D6609E11D5FCCE900F3D26B /* AddContactViewController.swift in Sources */,

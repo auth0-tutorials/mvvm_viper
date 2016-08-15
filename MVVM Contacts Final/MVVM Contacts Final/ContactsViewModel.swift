@@ -14,7 +14,7 @@ protocol ContactsViewModelProtocol: class {
 
 class ContactsViewModel {
 
-    weak var feedback: ContactsViewModelProtocol?
+    weak var contactsViewModelProtocol: ContactsViewModelProtocol?
     private var contacts: [Contact] = [Contact(firstName: "Alan", lastName: "Smith"),
                                        Contact(firstName: "Beatrice", lastName: "Davies"),
                                        Contact(firstName: "Chloe", lastName: "Brown"),
@@ -36,6 +36,6 @@ extension ContactsViewModel: AddContactViewModelDelegate {
     func didAddContact(contact: Contact) {
         let insertionIndex = contacts.insertionIndex(of: contact) { $0 < $1 }
         contacts.insert(contact, atIndex: insertionIndex)
-        feedback?.didInsertContact(at: insertionIndex)
+        contactsViewModelProtocol?.didInsertContact(at: insertionIndex)
     }
 }

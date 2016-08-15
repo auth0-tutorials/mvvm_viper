@@ -8,9 +8,14 @@
 
 import Foundation
 
-public struct Contact: Equatable {
+public class Contact {
     var firstName = ""
     var lastName = ""
+
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
 
     var fullName: String {
         get {
@@ -19,22 +24,10 @@ public struct Contact: Equatable {
     }
 }
 
-public func ==(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString == rhs.fullName.lowercaseString
-}
-
 public func <(lhs: Contact, rhs: Contact) -> Bool {
     return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
 }
 
 public func >(lhs: Contact, rhs: Contact) -> Bool {
     return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
-}
-
-public func <=(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString <= rhs.fullName.lowercaseString
-}
-
-public func >=(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString >= rhs.fullName.lowercaseString
 }
