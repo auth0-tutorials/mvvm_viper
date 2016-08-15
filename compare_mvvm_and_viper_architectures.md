@@ -54,9 +54,42 @@ For something that looks like this:
 
 Now it's time to get hands dirty to grasp the new concepts. So let's build an example app structured using MVVM!
 
-### Contacts App
+### MVVM Contacts App
+
+We'll build a Contacts app. You can follow the example in the _MVVM Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
+
+The app has two screens: the first is a list of contacts, displayed in table view with their full name and a placeholder profile image.
 
 <img src="img/contacts.png" width="300">
+
+The second is an Add Contact screen, with first/last name text fields and cancel/done button items.
+
+<img src="img/add_contact.png" width="300">
+
+#### Model
+
+The following code is a struct to represent the contact and a few operator overloading functions. Put it in the **Contact** file.
+
+```swift
+public struct Contact {
+    var firstName = ""
+    var lastName = ""
+
+    var fullName: String {
+        get {
+            return "\(firstName) \(lastName)"
+        }
+    }
+}
+
+public func <(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+}
+
+public func >(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+}
+```
 
 ## VIPER with example
 
