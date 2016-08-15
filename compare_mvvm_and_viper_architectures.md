@@ -200,6 +200,67 @@ Again, mostly UI operations. Note that it delegates to the View Model the respon
 
 #### View Model
 
+Time to talk about the new kid in town: the View Model layer. First, insert the following code in the _ContactsViewModel_ file.
+
+```swift
+protocol ContactsViewModelProtocol: class {
+    func didInsertContact(at index: Int)
+}
+
+class ContactsViewModel {
+
+    weak var contactsViewModelProtocol: ContactsViewModelProtocol?
+    private var contacts: [Contact] = [Contact(firstName: "Alan", lastName: "Smith"),
+                                       Contact(firstName: "Beatrice", lastName: "Davies"),
+                                       Contact(firstName: "Chloe", lastName: "Brown"),
+                                       Contact(firstName: "Daniel", lastName: "Williams"),
+                                       Contact(firstName: "Edward", lastName: "Robinson"),
+                                       Contact(firstName: "Frankie", lastName: "Walker")]
+
+    var contactsCount: Int {
+        return contacts.count
+    }
+
+    func contactFullName(at index: Int) -> String {
+        let contact = contacts[index]
+        return contact.fullName
+    }
+}
+
+extension ContactsViewModel: AddContactViewModelDelegate {
+    func didAddContact(contact: Contact) {
+        let insertionIndex = contacts.insertionIndex(of: contact) { $0 < $1 }
+        contacts.insert(contact, atIndex: insertionIndex)
+        contactsViewModelProtocol?.didInsertContact(at: insertionIndex)
+    }
+}
+```
+
+First thing to remember as a rule of thumb: View Model is not responsible for user interface. A way to guarantee that you're not messing things up is to **never** import UIKit in a View Model file.
+
+This file has a few mocked contacts and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view when that there are changes in the data source when a new contact is added.
+
+Finally, the last file to be updated is _AddContactViewModel_.
+
+```swift
+protocol AddContactViewModelDelegate: class {
+    func didAddContact(contact: Contact)
+}
+
+class AddContactViewModel {
+    weak var delegate: AddContactViewModelDelegate?
+
+    func addNewContact(firstName firstName: String, lastName: String) {
+        let contact = Contact(firstName: firstName, lastName: lastName)
+        delegate?.didAddContact(contact)
+    }
+}
+```
+
+This is the simplest file of all. It only creates a new contact and notifies its delegate of the creation, which happens to be the _ContactsViewModel_. In a real world scenario, this would involve performing a network request and/or inserting in a local database. But none of them should be a View Model role - networking and database should have their own managers.
+
+That's it for MVVM. You may find this approach more testable, mantainable and distributed than usual MVC. So let's talk about VIPER and check how the two architecture styles compare.
+
 ## VIPER with example
 
 ### How it works
