@@ -68,12 +68,17 @@ The second is an Add Contact screen, with first/last name text fields and cancel
 
 #### Model
 
-The following code is a struct to represent the contact and a few operator overloading functions. Put it in the **Contact** file.
+The following code is a struct to represent the contact and two operator overloading functions. Put it in the **Contact** file.
 
 ```swift
-public struct Contact {
+public class Contact {
     var firstName = ""
     var lastName = ""
+
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
 
     var fullName: String {
         get {
@@ -90,6 +95,110 @@ public func >(lhs: Contact, rhs: Contact) -> Bool {
     return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
 }
 ```
+A Contact has only these two fields, _firstName_ and _lastName_. A stored property is responsible for returning the _fullName_, and the operators _>_ and _<_ have their implementation to be used when an instance is inserted in a ordered list.
+
+#### View
+
+There are three files responsible for the view layer: the **Main** storyboard, with views already laid out in the starter project; the **ContactsViewController**, that displays the contacts list in a table view; and the **AddContactViewController**, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for **ContactsViewController**:
+
+```swift
+class ContactsViewController: UIViewController {
+
+    @IBOutlet var tableView: UITableView!
+    let viewModel = ContactsViewModel()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.tableFooterView = UIView()
+        viewModel.contactsViewModelProtocol = self
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let addContactNavigationController = segue.destinationViewController as? UINavigationController
+        let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
+        addContactVC?.delegate = viewModel
+    }
+
+}
+
+extension ContactsViewController: UITableViewDataSource {
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+        cell.textLabel?.text = viewModel.contactFullName(at: indexPath.row)
+        return cell
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.contactsCount
+    }
+
+}
+
+extension ContactsViewController: ContactsViewModelProtocol {
+
+    func didInsertContact(at index: Int) {
+        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        tableView.endUpdates()
+    }
+}
+```
+
+A quick look is enough to realize that this class has mostly interface responsibilities. It also has navigation flow dependency in __prepareForSegue(::)__ - something that will change in VIPER with the Router layer.
+
+Now take a closer look at the class extension that conforms to the _UITableViewDataSource_ protocol. The implemented functions don't interact directly with the __Contact__ class in the Model layer - instead, it gets the data the way it will be displayed, already formatted by the __ViewModel__.
+
+Same thing for the class extension that conforms to the _ContactsViewModelProtocol_ protocol. It's only notified that a new _Contact_ instance was added to the data source, so its work is to insert a new row in the table view - that's only an interface update.
+
+Now update your **AddContactViewController** file with the following code:
+
+```swift
+class AddContactViewController: UIViewController {
+
+    @IBOutlet var firstNameTextField: UITextField!
+    @IBOutlet var lastNameTextField: UITextField!
+    let viewModel = AddContactViewModel()
+    weak var delegate: AddContactViewModelDelegate? {
+        didSet {
+            viewModel.delegate = delegate
+        }
+    }
+
+    @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+        guard let firstName = firstNameTextField.text else {
+            return
+        }
+        guard let lastName = lastNameTextField.text else {
+            return
+        }
+        if firstName.isEmpty || lastName.isEmpty {
+            showEmptyNameAlert()
+            return
+        }
+        dismissViewControllerAnimated(true) { [unowned self] in
+            self.viewModel.addNewContact(firstName: firstName, lastName: lastName)
+        }
+    }
+
+    @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    private func showEmptyNameAlert() {
+        let alertView = UIAlertController(title: "Error",
+                                          message: "A contact must have first and last names",
+                                          preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
+        presentViewController(alertView, animated: true, completion: nil)
+    }
+
+}
+```
+Again, mostly UI operations. Note that it delegates to the View Model the responsibility of creating a new _Contact_ instance on _didClickOnDoneButton(:)_.
+
+#### View Model
 
 ## VIPER with example
 
