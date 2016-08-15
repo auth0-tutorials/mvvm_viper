@@ -20,21 +20,21 @@ public struct Contact: Equatable {
 }
 
 public func ==(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName == rhs.fullName
+    return lhs.fullName.lowercaseString == rhs.fullName.lowercaseString
 }
 
 public func <(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName < rhs.fullName
+    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
 }
 
 public func >(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName > rhs.fullName
+    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
 }
 
 public func <=(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName <= rhs.fullName
+    return lhs.fullName.lowercaseString <= rhs.fullName.lowercaseString
 }
 
 public func >=(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName >= rhs.fullName
+    return lhs.fullName.lowercaseString >= rhs.fullName.lowercaseString
 }

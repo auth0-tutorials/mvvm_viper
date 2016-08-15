@@ -12,7 +12,6 @@ import Foundation
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-
     let viewModel = ContactsViewModel()
 
     override func viewDidLoad() {
@@ -45,7 +44,7 @@ extension ContactsViewController: UITableViewDataSource {
 
 extension ContactsViewController: ContactsViewModelProtocol {
 
-    func didInsertContact(withFullName fullName: String, at index: Int) {
+    func didInsertContact(at index: Int) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)

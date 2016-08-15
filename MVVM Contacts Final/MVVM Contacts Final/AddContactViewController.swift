@@ -28,12 +28,25 @@ class AddContactViewController: UIViewController {
         guard let lastName = lastNameTextField.text else {
             return
         }
-        viewModel.addNewContact(firstName: firstName, lastName: lastName)
-        dismissViewControllerAnimated(true, completion: nil)
+        if firstName.isEmpty || lastName.isEmpty {
+            showEmptyNameAlert()
+            return
+        }
+        dismissViewControllerAnimated(true) { [unowned self] in
+            self.viewModel.addNewContact(firstName: firstName, lastName: lastName)
+        }
     }
 
     @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    private func showEmptyNameAlert() {
+        let alertView = UIAlertController(title: "Error",
+                                          message: "A contact must have first and last names",
+                                          preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
+        presentViewController(alertView, animated: true, completion: nil)
     }
 
 }

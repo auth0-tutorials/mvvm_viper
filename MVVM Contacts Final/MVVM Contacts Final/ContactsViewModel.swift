@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ContactsViewModelProtocol: class {
-    func didInsertContact(withFullName fullName: String, at index: Int)
+    func didInsertContact(at index: Int)
 }
 
 class ContactsViewModel {
@@ -20,7 +20,7 @@ class ContactsViewModel {
                                        Contact(firstName: "Chloe", lastName: "Brown"),
                                        Contact(firstName: "Daniel", lastName: "Williams"),
                                        Contact(firstName: "Edward", lastName: "Robinson"),
-                                       Contact(firstName: "Frankie", lastName: "Walker"), ]
+                                       Contact(firstName: "Frankie", lastName: "Walker")]
 
     var contactsCount: Int {
         return contacts.count
@@ -34,8 +34,8 @@ class ContactsViewModel {
 
 extension ContactsViewModel: AddContactViewModelDelegate {
     func didAddContact(contact: Contact) {
-        let insertionIndex = contacts.insertionIndexOf(contact) { $0 < $1 }
+        let insertionIndex = contacts.insertionIndex(of: contact) { $0 < $1 }
         contacts.insert(contact, atIndex: insertionIndex)
-        feedback?.didInsertContact(withFullName: contact.fullName, at: insertionIndex)
+        feedback?.didInsertContact(at: insertionIndex)
     }
 }
