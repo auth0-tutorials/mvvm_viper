@@ -66,9 +66,9 @@ The second is an Add Contact screen, with first/last name text fields and cancel
 
 <img src="img/add_contact.png" width="300">
 
-#### Model
+#### Model <a id="model"></a>
 
-The following code is a struct to represent the contact and two operator overloading functions. Put it in the **Contact** file.
+The following code is a class to represent the contact and two operator overloading functions. Put it in the **Contact** file.
 
 ```swift
 public class Contact {
@@ -286,4 +286,12 @@ Comparing to MVX styles, Viper has a few key differences in the distribution of 
 
 Again, it's time to get the hands dirty and explore the VIPER architecture with an example app.
 
-### Search app
+### Contacts App
+
+#### Entity
+
+This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the same code found [here](#model) in the **Contacts** file.
+
+### Conclusion
+
+You can find all projects (VIPER and MVVM - Starter and Final) in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
