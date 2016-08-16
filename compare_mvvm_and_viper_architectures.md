@@ -238,9 +238,9 @@ extension ContactsViewModel: AddContactViewModelDelegate {
 
 First thing to remember as a rule of thumb: View Model is not responsible for user interface. A way to guarantee that you're not messing things up is to **never** import UIKit in a View Model file.
 
-This file has a few mocked contacts and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view when that there are changes in the data source when a new contact is added.
+This file has a few mocked contacts and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view that there are changes in the data source when a new contact is added.
 
-Finally, the last file to be updated is _AddContactViewModel_.
+Finally, the last file to be updated is **AddContactViewModel**.
 
 ```swift
 protocol AddContactViewModelDelegate: class {
