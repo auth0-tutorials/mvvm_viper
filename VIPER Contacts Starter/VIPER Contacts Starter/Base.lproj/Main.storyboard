@@ -81,9 +81,6 @@
                     <navigationItem key="navigationItem" title="Contacts" id="i46-CO-13g">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Cgd-uW-q3s">
                             <color key="tintColor" red="0.9137254901960784" green="0.33333333333333331" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <segue destination="u2i-nx-oWN" kind="presentation" id="l1O-om-Odx"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -98,7 +95,7 @@
         <!--Navigation Controller-->
         <scene sceneID="2fL-OT-XC1">
             <objects>
-                <navigationController id="u2i-nx-oWN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddContactsNavigationController" id="u2i-nx-oWN" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Wg-lX-2h6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
