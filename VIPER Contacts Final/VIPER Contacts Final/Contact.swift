@@ -24,6 +24,10 @@ public class Contact {
     }
 }
 
+struct DisplayContact {
+    var fullName = ""
+}
+
 public func <(lhs: Contact, rhs: Contact) -> Bool {
     return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
 }

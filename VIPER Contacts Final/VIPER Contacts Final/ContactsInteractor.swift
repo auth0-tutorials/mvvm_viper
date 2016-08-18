@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+protocol ContactsInteractorOutput: class {
+    func didRetrieveContacts(contacts: [Contact])
+}
+
+class ContactsInteractor {
+
+    weak var delegate: ContactsInteractorOutput?
+
+    func retrieveContacts() -> [Contact] {
+        return [Contact(firstName: "Alan", lastName: "Smith"),
+                Contact(firstName: "Beatrice", lastName: "Davies"),
+                Contact(firstName: "Chloe", lastName: "Brown"),
+                Contact(firstName: "Daniel", lastName: "Williams"),
+                Contact(firstName: "Edward", lastName: "Robinson"),
+                Contact(firstName: "Frankie", lastName: "Walker")]
+    }
+}

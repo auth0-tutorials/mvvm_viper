@@ -18,6 +18,9 @@ class ContactsViewController: UIViewController {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         viewModel.contactsViewModelProtocol = self
+        viewModel.retrieveContacts() { [unowned self] in
+            self.tableView.reloadData()
+        }
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol AddContactPresenterDelegate: class {
+protocol AddContactModuleDelegate: class {
     func didAddContactAction()
     func didCancelAddContactAction()
 }
 
 class AddContactPresenter {
-    weak var delegate: AddContactPresenterDelegate?
+    weak var delegate: AddContactModuleDelegate?
     var interactor = AddContactInteractor()
     var wireframe = AddContactWireframe()
 

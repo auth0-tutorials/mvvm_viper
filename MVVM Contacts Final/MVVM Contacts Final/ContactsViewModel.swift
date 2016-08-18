@@ -15,12 +15,17 @@ protocol ContactsViewModelProtocol: class {
 class ContactsViewModel {
 
     weak var contactsViewModelProtocol: ContactsViewModelProtocol?
-    private var contacts: [Contact] = [Contact(firstName: "Alan", lastName: "Smith"),
-                                       Contact(firstName: "Beatrice", lastName: "Davies"),
-                                       Contact(firstName: "Chloe", lastName: "Brown"),
-                                       Contact(firstName: "Daniel", lastName: "Williams"),
-                                       Contact(firstName: "Edward", lastName: "Robinson"),
-                                       Contact(firstName: "Frankie", lastName: "Walker")]
+    private var contacts: [Contact] = []
+
+    func retrieveContacts(response: () -> Void) {
+        contacts = [Contact(firstName: "Alan", lastName: "Smith"),
+                    Contact(firstName: "Beatrice", lastName: "Davies"),
+                    Contact(firstName: "Chloe", lastName: "Brown"),
+                    Contact(firstName: "Daniel", lastName: "Williams"),
+                    Contact(firstName: "Edward", lastName: "Robinson"),
+                    Contact(firstName: "Frankie", lastName: "Walker")]
+        response()
+    }
 
     var contactsCount: Int {
         return contacts.count

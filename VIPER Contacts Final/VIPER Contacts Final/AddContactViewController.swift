@@ -14,7 +14,7 @@ class AddContactViewController: UIViewController {
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
     let presenter = AddContactPresenter()
-    weak var delegate: AddContactPresenterDelegate? {
+    weak var delegate: AddContactModuleDelegate? {
         didSet {
             presenter.delegate = delegate
         }

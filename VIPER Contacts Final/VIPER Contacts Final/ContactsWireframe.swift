@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import UIKit
+
+class ContactsWireframe {
+
+    var mainStoryboard: UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+    }
+
+    func showAddContactScreen() {
+//        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
+
+    }
+
+}

@@ -12,10 +12,28 @@ import Foundation
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
+    let presenter = ContactsPresenter()
+    var contacts: [DisplayContact] = []
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        presenter.delegate = self
+        presenter.retrieveContacts()
+    }
+
+    @IBAction func didClickOnAddButton(sender: UIBarButtonItem) {
+        presenter.addNewContact()
+    }
+
+}
+
+extension ContactsViewController: ContactsInterface {
+
+    func reloadInterface(with data: [DisplayContact]) {
+        contacts = data
+        tableView.reloadData()
     }
 
 }
@@ -23,11 +41,12 @@ class ContactsViewController: UIViewController {
 extension ContactsViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell")!
+        cell.textLabel?.text = contacts[indexPath.row].fullName
+        return cell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return contacts.count
     }
-
 }

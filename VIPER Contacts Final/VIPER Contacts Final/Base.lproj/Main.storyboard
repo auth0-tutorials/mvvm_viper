@@ -29,7 +29,7 @@
         <!--Contacts-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ContactsViewController" customModule="VIPER_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ContactsViewController" customModule="VIPER_Contacts_Final" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -81,6 +81,9 @@
                     <navigationItem key="navigationItem" title="Contacts" id="i46-CO-13g">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Cgd-uW-q3s">
                             <color key="tintColor" red="0.9137254901960784" green="0.33333333333333331" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="didClickOnAddButton:" destination="BYZ-38-t0r" id="Ldc-gF-fWf"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -116,7 +119,7 @@
         <!--New Contact-->
         <scene sceneID="tLZ-gM-Szl">
             <objects>
-                <viewController id="k1Q-Qo-l2E" customClass="AddContactViewController" customModule="VIPER_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="k1Q-Qo-l2E" customClass="AddContactViewController" customModule="VIPER_Contacts_Final" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bDs-dZ-aqJ"/>
                         <viewControllerLayoutGuide type="bottom" id="0jZ-3C-xAG"/>
