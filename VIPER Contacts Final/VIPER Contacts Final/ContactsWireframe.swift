@@ -11,13 +11,24 @@ import UIKit
 
 class ContactsWireframe {
 
+    var contactsViewController: ContactsViewController?
+
+    init(viewController: ContactsViewController) {
+        contactsViewController = viewController
+    }
+
     var mainStoryboard: UIStoryboard {
         return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
     }
 
     func showAddContactScreen() {
-//        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
-
+        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
+        if let addContactsVC = navController.childViewControllers.first as? AddContactViewController {
+            addContactsVC.delegate = contactsViewController?.presenter
+        }
+        navController.modalPresentationStyle = .FullScreen
+        navController.modalTransitionStyle = .CoverVertical
+        contactsViewController?.presentViewController(navController, animated: true, completion: nil)
     }
 
 }

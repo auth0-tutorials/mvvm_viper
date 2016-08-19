@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol AddContactModuleDelegate: class {
     func didAddContactAction()
@@ -16,7 +17,11 @@ protocol AddContactModuleDelegate: class {
 class AddContactPresenter {
     weak var delegate: AddContactModuleDelegate?
     var interactor = AddContactInteractor()
-    var wireframe = AddContactWireframe()
+    var wireframe: AddContactWireframe
+
+    init(viewController: UIViewController) {
+        wireframe = AddContactWireframe(presentedViewController: viewController)
+    }
 
     func cancelAddContactAction() {
         wireframe.dismissAddContactInterface() { [weak delegate] in

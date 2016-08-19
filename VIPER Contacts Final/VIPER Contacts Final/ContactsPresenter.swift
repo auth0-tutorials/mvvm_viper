@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ContactsInterface: class {
     func reloadInterface(with data: [DisplayContact])
@@ -14,9 +15,13 @@ protocol ContactsInterface: class {
 
 class ContactsPresenter {
 
-    let wireframe = ContactsWireframe()
+    let wireframe: ContactsWireframe
     let interactor = ContactsInteractor()
     weak var delegate: ContactsInterface?
+
+    init(viewController: ContactsViewController) {
+        wireframe = ContactsWireframe(viewController: viewController)
+    }
 
     func retrieveContacts() {
         interactor.delegate = self
@@ -36,4 +41,12 @@ extension ContactsPresenter: ContactsInteractorOutput {
         })
     }
 
+}
+
+extension ContactsPresenter: AddContactModuleDelegate {
+    func didAddContactAction() {
+        print("did add")
+    }
+
+    func didCancelAddContactAction() {}
 }

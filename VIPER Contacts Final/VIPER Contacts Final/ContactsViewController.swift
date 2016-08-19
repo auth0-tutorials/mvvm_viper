@@ -12,19 +12,21 @@ import Foundation
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    let presenter = ContactsPresenter()
+    var presenter: ContactsPresenter?
     var contacts: [DisplayContact] = []
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-        presenter.delegate = self
-        presenter.retrieveContacts()
+
+        presenter = ContactsPresenter(viewController: self)
+        presenter?.delegate = self
+        presenter?.retrieveContacts()
     }
 
     @IBAction func didClickOnAddButton(sender: UIBarButtonItem) {
-        presenter.addNewContact()
+        presenter?.addNewContact()
     }
 
 }

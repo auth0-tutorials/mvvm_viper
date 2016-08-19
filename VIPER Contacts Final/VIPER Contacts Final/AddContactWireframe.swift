@@ -13,7 +13,12 @@ class AddContactWireframe {
 
     var presentedViewController: UIViewController?
 
+    init(presentedViewController: UIViewController) {
+        self.presentedViewController = presentedViewController
+    }
+
     func dismissAddContactInterface(completion: (() -> Void)?) {
         presentedViewController?.dismissViewControllerAnimated(true, completion: completion)
     }
+
 }

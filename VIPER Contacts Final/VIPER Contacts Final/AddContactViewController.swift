@@ -13,15 +13,16 @@ class AddContactViewController: UIViewController {
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
-    let presenter = AddContactPresenter()
+    var presenter: AddContactPresenter?
     weak var delegate: AddContactModuleDelegate? {
         didSet {
-            presenter.delegate = delegate
+            presenter?.delegate = delegate
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        presenter = AddContactPresenter(viewController: self)
     }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
@@ -35,11 +36,11 @@ class AddContactViewController: UIViewController {
             showEmptyNameAlert()
             return
         }
-        presenter.addNewContact(firstName: firstName, lastName: lastName)
+        presenter?.addNewContact(firstName: firstName, lastName: lastName)
     }
 
     @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
-        presenter.cancelAddContactAction()
+        presenter?.cancelAddContactAction()
     }
 
     private func showEmptyNameAlert() {
