@@ -24,14 +24,14 @@ public class Contact {
     }
 }
 
-struct DisplayContact {
+public struct DisplayContact {
     var fullName = ""
 }
 
-public func <(lhs: Contact, rhs: Contact) -> Bool {
+public func <(lhs: DisplayContact, rhs: DisplayContact) -> Bool {
     return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
 }
 
-public func >(lhs: Contact, rhs: Contact) -> Bool {
+public func >(lhs: DisplayContact, rhs: DisplayContact) -> Bool {
     return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
 }

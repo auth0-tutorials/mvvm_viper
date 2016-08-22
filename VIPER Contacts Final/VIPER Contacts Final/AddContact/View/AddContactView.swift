@@ -1,29 +1,16 @@
 //
-//  AddContactViewController.swift
-//  MVVM Contacts Starter
-//
-//  Created by Rafael Sacchi on 8/13/16.
-//  Copyright © 2016 Rafael Sacchi. All rights reserved.
+// Created by AUTHOR
+// Copyright (c) YEAR AUTHOR. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AddContactViewController: UIViewController {
+class AddContactView: UIViewController, VIPERViewProtocol {
+    var presenter: VIPERPresenterProtocol?
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
-    var presenter: AddContactPresenter?
-    weak var delegate: AddContactModuleDelegate? {
-        didSet {
-            presenter?.delegate = delegate
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        presenter = AddContactPresenter(viewController: self)
-    }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
         guard let firstName = firstNameTextField.text else {
@@ -50,5 +37,4 @@ class AddContactViewController: UIViewController {
         alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
         presentViewController(alertView, animated: true, completion: nil)
     }
-
 }
