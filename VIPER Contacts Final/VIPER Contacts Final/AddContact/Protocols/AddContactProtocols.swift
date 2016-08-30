@@ -19,7 +19,7 @@ protocol VIPERViewProtocol: class {
 }
 
 protocol VIPERWireFrameProtocol: class {
-    static func createAddContactModule(withDelegate delegate: AddModuleDelegate) -> UIViewController
+    static func createAddContactModule(with delegate: AddModuleDelegate) -> UIViewController
     /**
     * Add here your methods for communication PRESENTER -> WIREFRAME
     */

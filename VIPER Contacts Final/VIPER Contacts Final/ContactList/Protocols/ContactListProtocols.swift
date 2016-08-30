@@ -10,15 +10,15 @@ protocol ContactListViewProtocol: class {
     var presenter: ContactListPresenterProtocol? { get set }
 
     // PRESENTER -> VIEW
-    func reloadInterface(with data: [DisplayContact])
-    func insert(contact displayContact: DisplayContact, at index: Int)
+    func didInsertContact(contact: ContactViewModel)
+    func reloadInterface(with contacts: [ContactViewModel])
 }
 
 protocol ContactListWireFrameProtocol: class {
     static func createContactListModule() -> UIViewController
 
     // PRESENTER -> WIREFRAME
-    func presentAddContactScreen(fromView view: ContactListViewProtocol)
+    func presentAddContactScreen(from view: ContactListViewProtocol)
 }
 
 protocol ContactListPresenterProtocol: class {
@@ -27,8 +27,8 @@ protocol ContactListPresenterProtocol: class {
     var wireFrame: ContactListWireFrameProtocol? { get set }
 
     // VIEW -> PRESENTER
-    func retrieveContacts()
-    func addNewContact(fromView view: ContactListView)
+    func viewDidLoad()
+    func addNewContact(from view: ContactListView)
 }
 
 protocol ContactListInteractorOutputProtocol: class {

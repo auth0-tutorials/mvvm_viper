@@ -24,14 +24,19 @@ public class Contact {
     }
 }
 
-public struct DisplayContact {
+public class ManagedContact {
+    @NSManaged var firstName: String
+    @NSManaged var lastName: String
+}
+
+public struct ContactViewModel {
     var fullName = ""
 }
 
-public func <(lhs: DisplayContact, rhs: DisplayContact) -> Bool {
+public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
     return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
 }
 
-public func >(lhs: DisplayContact, rhs: DisplayContact) -> Bool {
+public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
     return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
 }

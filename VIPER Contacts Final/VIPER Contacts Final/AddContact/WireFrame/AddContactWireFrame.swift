@@ -8,7 +8,7 @@ import UIKit
 
 class VIPERWireFrame: VIPERWireFrameProtocol {
 
-    class func createAddContactModule(withDelegate delegate: AddModuleDelegate) -> UIViewController {
+    class func createAddContactModule(with delegate: AddModuleDelegate) -> UIViewController {
 
         let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
         if let view = navController.childViewControllers.first as? VIPERViewProtocol {

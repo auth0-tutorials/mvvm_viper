@@ -12,13 +12,19 @@ class AddContactView: UIViewController, VIPERViewProtocol {
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        firstNameTextField.becomeFirstResponder()
+    }
+
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
-        guard let firstName = firstNameTextField.text else {
-            return
+        guard
+            let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text
+            else {
+                return
         }
-        guard let lastName = lastNameTextField.text else {
-            return
-        }
+
         if firstName.isEmpty || lastName.isEmpty {
             showEmptyNameAlert()
             return
