@@ -12,25 +12,25 @@ protocol AddModuleDelegate: class {
     func didCancelAddContact()
 }
 
-protocol VIPERViewProtocol: class {
-    var presenter: VIPERPresenterProtocol? { get set }
+protocol AddContactViewProtocol: class {
+    var presenter: AddContactPresenterProtocol? { get set }
     /**
     * Add here your methods for communication PRESENTER -> VIEW
     */
 }
 
-protocol VIPERWireFrameProtocol: class {
+protocol AddContactWireFrameProtocol: class {
     static func createAddContactModule(with delegate: AddModuleDelegate) -> UIViewController
     /**
     * Add here your methods for communication PRESENTER -> WIREFRAME
     */
-    func dismissAddContactInterface(from view: VIPERViewProtocol, completion: (() -> Void)?)
+    func dismissAddContactInterface(from view: AddContactViewProtocol, completion: (() -> Void)?)
 }
 
-protocol VIPERPresenterProtocol: class {
-    var view: VIPERViewProtocol? { get set }
-    var interactor: VIPERInteractorInputProtocol? { get set }
-    var wireFrame: VIPERWireFrameProtocol? { get set }
+protocol AddContactPresenterProtocol: class {
+    var view: AddContactViewProtocol? { get set }
+    var interactor: AddContactInteractorInputProtocol? { get set }
+    var wireFrame: AddContactWireFrameProtocol? { get set }
     var delegate: AddModuleDelegate? { get set }
 
     // VIEW -> PRESENTER
@@ -38,34 +38,34 @@ protocol VIPERPresenterProtocol: class {
     func addNewContact(firstName firstName: String, lastName: String)
 }
 
-protocol VIPERInteractorOutputProtocol: class {
+protocol AddContactInteractorOutputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> PRESENTER
     */
 }
 
-protocol VIPERInteractorInputProtocol: class {
-    var presenter: VIPERInteractorOutputProtocol? { get set }
-    var APIDataManager: VIPERAPIDataManagerInputProtocol? { get set }
-    var localDatamanager: VIPERLocalDataManagerInputProtocol? { get set }
+protocol AddContactInteractorInputProtocol: class {
+    var presenter: AddContactInteractorOutputProtocol? { get set }
+    var APIDataManager: AddContactAPIDataManagerInputProtocol? { get set }
+    var localDatamanager: AddContactLocalDataManagerInputProtocol? { get set }
 
     // PRESENTER -> INTERACTOR
     func saveNewContact(firstName firstName: String, lastName: String) -> Contact?
 }
 
-protocol VIPERDataManagerInputProtocol: class {
+protocol AddContactDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> DATAMANAGER
     */
 }
 
-protocol VIPERAPIDataManagerInputProtocol: class {
+protocol AddContactAPIDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> APIDATAMANAGER
     */
 }
 
-protocol VIPERLocalDataManagerInputProtocol: class {
+protocol AddContactLocalDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> LOCALDATAMANAGER
     */

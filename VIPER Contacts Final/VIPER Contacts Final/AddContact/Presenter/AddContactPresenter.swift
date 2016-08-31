@@ -5,10 +5,10 @@
 
 import Foundation
 
-class VIPERPresenter: VIPERPresenterProtocol, VIPERInteractorOutputProtocol {
-    weak var view: VIPERViewProtocol?
-    var interactor: VIPERInteractorInputProtocol?
-    var wireFrame: VIPERWireFrameProtocol?
+class AddContactPresenter: AddContactPresenterProtocol, AddContactInteractorOutputProtocol {
+    weak var view: AddContactViewProtocol?
+    var interactor: AddContactInteractorInputProtocol?
+    var wireFrame: AddContactWireFrameProtocol?
     var delegate: AddModuleDelegate?
 
     func cancelAddContactAction() {

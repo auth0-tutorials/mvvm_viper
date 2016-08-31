@@ -32,17 +32,13 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
         return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
     }
 
-    var mainStoryboard: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-    }
-
     func presentAddContactScreen(from view: ContactListViewProtocol) {
 
         guard let delegate = view.presenter as? AddModuleDelegate else {
             return
         }
 
-        let addContactsView = VIPERWireFrame.createAddContactModule(with: delegate)
+        let addContactsView = AddContactWireFrame.createAddContactModule(with: delegate)
         if let sourceView = view as? UIViewController {
             sourceView.presentViewController(addContactsView, animated: true, completion: nil)
         }

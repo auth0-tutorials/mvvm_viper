@@ -12,7 +12,7 @@ enum PersistenceError: ErrorType {
     case ObjectNotFound
 }
 
-class VIPERLocalDataManager: VIPERLocalDataManagerInputProtocol {
+class AddContactLocalDataManager: AddContactLocalDataManagerInputProtocol {
 
     func createContact(firstName firstName: String, lastName: String) throws -> Contact {
         guard let managedOC = CoreDataStore.managedObjectContext else {

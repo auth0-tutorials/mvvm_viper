@@ -5,10 +5,10 @@
 
 import Foundation
 
-class VIPERInteractor: VIPERInteractorInputProtocol {
-    weak var presenter: VIPERInteractorOutputProtocol?
-    var APIDataManager: VIPERAPIDataManagerInputProtocol?
-    var localDatamanager: VIPERLocalDataManagerInputProtocol?
+class AddContactInteractor: AddContactInteractorInputProtocol {
+    weak var presenter: AddContactInteractorOutputProtocol?
+    var APIDataManager: AddContactAPIDataManagerInputProtocol?
+    var localDatamanager: AddContactLocalDataManagerInputProtocol?
 
     func saveNewContact(firstName firstName: String, lastName: String) -> Contact? {
         do {

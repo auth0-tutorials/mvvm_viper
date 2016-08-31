@@ -6,17 +6,17 @@
 import Foundation
 import UIKit
 
-class VIPERWireFrame: VIPERWireFrameProtocol {
+class AddContactWireFrame: AddContactWireFrameProtocol {
 
     class func createAddContactModule(with delegate: AddModuleDelegate) -> UIViewController {
 
         let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
-        if let view = navController.childViewControllers.first as? VIPERViewProtocol {
+        if let view = navController.childViewControllers.first as? AddContactViewProtocol {
             // Generating module components
-            let presenter: protocol<VIPERPresenterProtocol, VIPERInteractorOutputProtocol> = VIPERPresenter()
-            let interactor: VIPERInteractorInputProtocol = VIPERInteractor()
-            let localDataManager: VIPERLocalDataManagerInputProtocol = VIPERLocalDataManager()
-            let wireFrame: VIPERWireFrameProtocol = VIPERWireFrame()
+            let presenter: protocol<AddContactPresenterProtocol, AddContactInteractorOutputProtocol> = AddContactPresenter()
+            let interactor: AddContactInteractorInputProtocol = AddContactInteractor()
+            let localDataManager: AddContactLocalDataManagerInputProtocol = AddContactLocalDataManager()
+            let wireFrame: AddContactWireFrameProtocol = AddContactWireFrame()
 
             // Connecting
             view.presenter = presenter
@@ -36,7 +36,7 @@ class VIPERWireFrame: VIPERWireFrameProtocol {
         return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
     }
 
-    func dismissAddContactInterface(from view: VIPERViewProtocol, completion: (() -> Void)?) {
+    func dismissAddContactInterface(from view: AddContactViewProtocol, completion: (() -> Void)?) {
         if let view = view as? UIViewController {
             view.dismissViewControllerAnimated(true, completion: completion)
         }

@@ -6,8 +6,8 @@
 import Foundation
 import UIKit
 
-class AddContactView: UIViewController, VIPERViewProtocol {
-    var presenter: VIPERPresenterProtocol?
+class AddContactView: UIViewController, AddContactViewProtocol {
+    var presenter: AddContactPresenterProtocol?
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
