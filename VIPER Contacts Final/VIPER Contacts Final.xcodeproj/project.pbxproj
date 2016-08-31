@@ -12,23 +12,22 @@
 		8D24E7F01D63F53D006CB8CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D24E7DD1D63F53D006CB8CB /* Assets.xcassets */; };
 		8D24E7F11D63F53D006CB8CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D24E7DE1D63F53D006CB8CB /* LaunchScreen.storyboard */; };
 		8D24E7F21D63F53D006CB8CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D24E7E01D63F53D006CB8CB /* Main.storyboard */; };
-		8D24E7F31D63F53D006CB8CB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E7E21D63F53D006CB8CB /* Contact.swift */; };
 		8D24E7F91D63F53D006CB8CB /* VIPER_Contacts_Starter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E7E81D63F53D006CB8CB /* VIPER_Contacts_Starter.xcdatamodeld */; };
-		8D24E80F1D68D3B1006CB8CB /* ContactListAPIDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8011D68D3B1006CB8CB /* ContactListAPIDataManager.swift */; };
 		8D24E8101D68D3B1006CB8CB /* ContactListLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8031D68D3B1006CB8CB /* ContactListLocalDataManager.swift */; };
 		8D24E8111D68D3B1006CB8CB /* ContactListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8051D68D3B1006CB8CB /* ContactListInteractor.swift */; };
 		8D24E8131D68D3B1006CB8CB /* ContactListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8081D68D3B1006CB8CB /* ContactListPresenter.swift */; };
 		8D24E8141D68D3B1006CB8CB /* ContactListProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E80A1D68D3B1006CB8CB /* ContactListProtocols.swift */; };
 		8D24E8151D68D3B1006CB8CB /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E80C1D68D3B1006CB8CB /* ContactListView.swift */; };
 		8D24E8161D68D3B1006CB8CB /* ContactListWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E80E1D68D3B1006CB8CB /* ContactListWireFrame.swift */; };
-		8D24E8301D6A7862006CB8CB /* AddContactAPIDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8221D6A7862006CB8CB /* AddContactAPIDataManager.swift */; };
 		8D24E8311D6A7862006CB8CB /* AddContactLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8241D6A7862006CB8CB /* AddContactLocalDataManager.swift */; };
 		8D24E8321D6A7862006CB8CB /* AddContactInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8261D6A7862006CB8CB /* AddContactInteractor.swift */; };
-		8D24E8331D6A7862006CB8CB /* AddContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8271D6A7862006CB8CB /* AddContactItem.swift */; };
 		8D24E8341D6A7862006CB8CB /* AddContactPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8291D6A7862006CB8CB /* AddContactPresenter.swift */; };
 		8D24E8351D6A7862006CB8CB /* AddContactProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E82B1D6A7862006CB8CB /* AddContactProtocols.swift */; };
 		8D24E8361D6A7862006CB8CB /* AddContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E82D1D6A7862006CB8CB /* AddContactView.swift */; };
 		8D24E8371D6A7862006CB8CB /* AddContactWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E82F1D6A7862006CB8CB /* AddContactWireFrame.swift */; };
+		8D24E8391D751983006CB8CB /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8381D751983006CB8CB /* CoreDataStore.swift */; };
+		8D24E83E1D764E5C006CB8CB /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E83C1D764E5C006CB8CB /* Contact+CoreDataProperties.swift */; };
+		8D24E83F1D764E5C006CB8CB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E83D1D764E5C006CB8CB /* Contact.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,24 +36,23 @@
 		8D24E7DD1D63F53D006CB8CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D24E7DF1D63F53D006CB8CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D24E7E11D63F53D006CB8CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8D24E7E21D63F53D006CB8CB /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		8D24E7E71D63F53D006CB8CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D24E7E91D63F53D006CB8CB /* VIPER_Contacts_Starter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VIPER_Contacts_Starter.xcdatamodel; sourceTree = "<group>"; };
-		8D24E8011D68D3B1006CB8CB /* ContactListAPIDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListAPIDataManager.swift; sourceTree = "<group>"; };
 		8D24E8031D68D3B1006CB8CB /* ContactListLocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListLocalDataManager.swift; sourceTree = "<group>"; };
 		8D24E8051D68D3B1006CB8CB /* ContactListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListInteractor.swift; sourceTree = "<group>"; };
 		8D24E8081D68D3B1006CB8CB /* ContactListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListPresenter.swift; sourceTree = "<group>"; };
 		8D24E80A1D68D3B1006CB8CB /* ContactListProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListProtocols.swift; sourceTree = "<group>"; };
 		8D24E80C1D68D3B1006CB8CB /* ContactListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
 		8D24E80E1D68D3B1006CB8CB /* ContactListWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListWireFrame.swift; sourceTree = "<group>"; };
-		8D24E8221D6A7862006CB8CB /* AddContactAPIDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactAPIDataManager.swift; sourceTree = "<group>"; };
 		8D24E8241D6A7862006CB8CB /* AddContactLocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactLocalDataManager.swift; sourceTree = "<group>"; };
 		8D24E8261D6A7862006CB8CB /* AddContactInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactInteractor.swift; sourceTree = "<group>"; };
-		8D24E8271D6A7862006CB8CB /* AddContactItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactItem.swift; sourceTree = "<group>"; };
 		8D24E8291D6A7862006CB8CB /* AddContactPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactPresenter.swift; sourceTree = "<group>"; };
 		8D24E82B1D6A7862006CB8CB /* AddContactProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactProtocols.swift; sourceTree = "<group>"; };
 		8D24E82D1D6A7862006CB8CB /* AddContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactView.swift; sourceTree = "<group>"; };
 		8D24E82F1D6A7862006CB8CB /* AddContactWireFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactWireFrame.swift; sourceTree = "<group>"; };
+		8D24E8381D751983006CB8CB /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		8D24E83C1D764E5C006CB8CB /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8D24E83D1D764E5C006CB8CB /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		8D676C7E1D5FBB3300F3B088 /* VIPER Contacts Final.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VIPER Contacts Final.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -74,12 +72,13 @@
 			children = (
 				8D24E7FE1D68D3B1006CB8CB /* ContactList */,
 				8D24E81F1D6A7862006CB8CB /* AddContact */,
+				8D24E8401D764ECB006CB8CB /* Entities */,
 				8D24E7DB1D63F53D006CB8CB /* AppDelegate.swift */,
 				8D24E7DC1D63F53D006CB8CB /* Array+Insertion.swift */,
+				8D24E8381D751983006CB8CB /* CoreDataStore.swift */,
 				8D24E7DD1D63F53D006CB8CB /* Assets.xcassets */,
 				8D24E7DE1D63F53D006CB8CB /* LaunchScreen.storyboard */,
 				8D24E7E01D63F53D006CB8CB /* Main.storyboard */,
-				8D24E7E21D63F53D006CB8CB /* Contact.swift */,
 				8D24E7E71D63F53D006CB8CB /* Info.plist */,
 				8D24E7E81D63F53D006CB8CB /* VIPER_Contacts_Starter.xcdatamodeld */,
 			);
@@ -102,18 +101,9 @@
 		8D24E7FF1D68D3B1006CB8CB /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
-				8D24E8001D68D3B1006CB8CB /* API */,
 				8D24E8021D68D3B1006CB8CB /* Local */,
 			);
 			path = DataManager;
-			sourceTree = "<group>";
-		};
-		8D24E8001D68D3B1006CB8CB /* API */ = {
-			isa = PBXGroup;
-			children = (
-				8D24E8011D68D3B1006CB8CB /* ContactListAPIDataManager.swift */,
-			);
-			path = API;
 			sourceTree = "<group>";
 		};
 		8D24E8021D68D3B1006CB8CB /* Local */ = {
@@ -180,18 +170,9 @@
 		8D24E8201D6A7862006CB8CB /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
-				8D24E8211D6A7862006CB8CB /* API */,
 				8D24E8231D6A7862006CB8CB /* Local */,
 			);
 			path = DataManager;
-			sourceTree = "<group>";
-		};
-		8D24E8211D6A7862006CB8CB /* API */ = {
-			isa = PBXGroup;
-			children = (
-				8D24E8221D6A7862006CB8CB /* AddContactAPIDataManager.swift */,
-			);
-			path = API;
 			sourceTree = "<group>";
 		};
 		8D24E8231D6A7862006CB8CB /* Local */ = {
@@ -206,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				8D24E8261D6A7862006CB8CB /* AddContactInteractor.swift */,
-				8D24E8271D6A7862006CB8CB /* AddContactItem.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -241,6 +221,15 @@
 				8D24E82F1D6A7862006CB8CB /* AddContactWireFrame.swift */,
 			);
 			path = WireFrame;
+			sourceTree = "<group>";
+		};
+		8D24E8401D764ECB006CB8CB /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				8D24E83C1D764E5C006CB8CB /* Contact+CoreDataProperties.swift */,
+				8D24E83D1D764E5C006CB8CB /* Contact.swift */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 		8D676C751D5FBB3200F3B088 = {
@@ -332,22 +321,21 @@
 			files = (
 				8D24E8371D6A7862006CB8CB /* AddContactWireFrame.swift in Sources */,
 				8D24E8311D6A7862006CB8CB /* AddContactLocalDataManager.swift in Sources */,
-				8D24E8331D6A7862006CB8CB /* AddContactItem.swift in Sources */,
 				8D24E8101D68D3B1006CB8CB /* ContactListLocalDataManager.swift in Sources */,
 				8D24E8111D68D3B1006CB8CB /* ContactListInteractor.swift in Sources */,
 				8D24E8131D68D3B1006CB8CB /* ContactListPresenter.swift in Sources */,
+				8D24E83F1D764E5C006CB8CB /* Contact.swift in Sources */,
 				8D24E7EF1D63F53D006CB8CB /* Array+Insertion.swift in Sources */,
 				8D24E7EE1D63F53D006CB8CB /* AppDelegate.swift in Sources */,
 				8D24E8321D6A7862006CB8CB /* AddContactInteractor.swift in Sources */,
+				8D24E83E1D764E5C006CB8CB /* Contact+CoreDataProperties.swift in Sources */,
 				8D24E8351D6A7862006CB8CB /* AddContactProtocols.swift in Sources */,
 				8D24E8161D68D3B1006CB8CB /* ContactListWireFrame.swift in Sources */,
-				8D24E7F31D63F53D006CB8CB /* Contact.swift in Sources */,
 				8D24E8341D6A7862006CB8CB /* AddContactPresenter.swift in Sources */,
 				8D24E8361D6A7862006CB8CB /* AddContactView.swift in Sources */,
-				8D24E80F1D68D3B1006CB8CB /* ContactListAPIDataManager.swift in Sources */,
+				8D24E8391D751983006CB8CB /* CoreDataStore.swift in Sources */,
 				8D24E8141D68D3B1006CB8CB /* ContactListProtocols.swift in Sources */,
 				8D24E7F91D63F53D006CB8CB /* VIPER_Contacts_Starter.xcdatamodeld in Sources */,
-				8D24E8301D6A7862006CB8CB /* AddContactAPIDataManager.swift in Sources */,
 				8D24E8151D68D3B1006CB8CB /* ContactListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

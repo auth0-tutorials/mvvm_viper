@@ -15,7 +15,6 @@ class VIPERWireFrame: VIPERWireFrameProtocol {
             // Generating module components
             let presenter: protocol<VIPERPresenterProtocol, VIPERInteractorOutputProtocol> = VIPERPresenter()
             let interactor: VIPERInteractorInputProtocol = VIPERInteractor()
-            let APIDataManager: VIPERAPIDataManagerInputProtocol = VIPERAPIDataManager()
             let localDataManager: VIPERLocalDataManagerInputProtocol = VIPERLocalDataManager()
             let wireFrame: VIPERWireFrameProtocol = VIPERWireFrame()
 
@@ -26,7 +25,6 @@ class VIPERWireFrame: VIPERWireFrameProtocol {
             presenter.interactor = interactor
             presenter.delegate = delegate
             interactor.presenter = presenter
-            interactor.APIDataManager = APIDataManager
             interactor.localDatamanager = localDataManager
 
             return navController

@@ -13,7 +13,6 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
         if let view = navController.childViewControllers.first as? ContactListView {
             let presenter: protocol<ContactListPresenterProtocol, ContactListInteractorOutputProtocol> = ContactListPresenter()
             let interactor: ContactListInteractorInputProtocol = ContactListInteractor()
-            let APIDataManager: ContactListAPIDataManagerInputProtocol = ContactListAPIDataManager()
             let localDataManager: ContactListLocalDataManagerInputProtocol = ContactListLocalDataManager()
             let wireFrame: ContactListWireFrameProtocol = ContactListWireFrame()
 
@@ -22,7 +21,6 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
             presenter.wireFrame = wireFrame
             presenter.interactor = interactor
             interactor.presenter = presenter
-            interactor.APIDataManager = APIDataManager
             interactor.localDatamanager = localDataManager
 
             return navController

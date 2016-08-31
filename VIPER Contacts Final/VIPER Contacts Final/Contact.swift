@@ -1,32 +1,29 @@
 //
 //  Contact.swift
-//  MVVM Contacts Starter
+//  VIPER Contacts Final
 //
-//  Created by Rafael Sacchi on 8/13/16.
+//  Created by Rafael Sacchi on 8/30/16.
 //  Copyright © 2016 Rafael Sacchi. All rights reserved.
 //
 
 import Foundation
+import CoreData
 
-public class Contact {
-    var firstName = ""
-    var lastName = ""
-
-    init(firstName: String, lastName: String) {
-        self.firstName = firstName
-        self.lastName = lastName
-    }
+public class Contact: NSManagedObject {
 
     var fullName: String {
         get {
-            return "\(firstName) \(lastName)"
+            var name = ""
+            if let firstName = firstName {
+                name += firstName
+            }
+            if let lastName = lastName {
+                name += " " + lastName
+            }
+            return name
         }
     }
-}
 
-public class ManagedContact {
-    @NSManaged var firstName: String
-    @NSManaged var lastName: String
 }
 
 public struct ContactViewModel {

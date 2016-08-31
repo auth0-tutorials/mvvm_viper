@@ -10,8 +10,12 @@ class VIPERInteractor: VIPERInteractorInputProtocol {
     var APIDataManager: VIPERAPIDataManagerInputProtocol?
     var localDatamanager: VIPERLocalDataManagerInputProtocol?
 
-    func saveNewContact(firstName firstName: String, lastName: String) -> Contact {
-        return Contact(firstName: firstName, lastName: lastName)
-        // core data
+    func saveNewContact(firstName firstName: String, lastName: String) -> Contact? {
+        do {
+            let contact = try localDatamanager?.createContact(firstName: firstName, lastName: lastName)
+            return contact
+        } catch {
+            return nil
+        }
     }
 }

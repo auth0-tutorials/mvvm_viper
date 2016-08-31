@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 protocol AddModuleDelegate: class {
     func didAddContact(contact: Contact)
@@ -49,7 +50,7 @@ protocol VIPERInteractorInputProtocol: class {
     var localDatamanager: VIPERLocalDataManagerInputProtocol? { get set }
 
     // PRESENTER -> INTERACTOR
-    func saveNewContact(firstName firstName: String, lastName: String) -> Contact
+    func saveNewContact(firstName firstName: String, lastName: String) -> Contact?
 }
 
 protocol VIPERDataManagerInputProtocol: class {
@@ -68,4 +69,5 @@ protocol VIPERLocalDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> LOCALDATAMANAGER
     */
+    func createContact(firstName firstName: String, lastName: String) throws -> Contact
 }

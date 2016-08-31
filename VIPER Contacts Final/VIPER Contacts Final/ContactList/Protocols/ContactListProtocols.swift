@@ -39,7 +39,6 @@ protocol ContactListInteractorOutputProtocol: class {
 
 protocol ContactListInteractorInputProtocol: class {
     var presenter: ContactListInteractorOutputProtocol? { get set }
-    var APIDataManager: ContactListAPIDataManagerInputProtocol? { get set }
     var localDatamanager: ContactListLocalDataManagerInputProtocol? { get set }
     /**
     * Add here your methods for communication PRESENTER -> INTERACTOR
@@ -63,4 +62,5 @@ protocol ContactListLocalDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> LOCALDATAMANAGER
     */
+    func retrieveContactList() throws -> [Contact]
 }
