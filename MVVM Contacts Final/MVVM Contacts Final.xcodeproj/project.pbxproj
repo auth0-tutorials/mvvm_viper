@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D24E8441D766F79006CB8CB /* AddContactLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8411D766F79006CB8CB /* AddContactLocalDataManager.swift */; };
+		8D24E8451D766F79006CB8CB /* ContactListLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8421D766F79006CB8CB /* ContactListLocalDataManager.swift */; };
+		8D24E8461D766F79006CB8CB /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8431D766F79006CB8CB /* CoreDataStore.swift */; };
+		8D24E84A1D766FDE006CB8CB /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E8491D766FDE006CB8CB /* Contact+CoreDataProperties.swift */; };
+		8D24E84E1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D24E84C1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld */; };
 		8D660A0F1D60AC1A00F3D26B /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A031D60AC1A00F3D26B /* AddContactViewController.swift */; };
 		8D660A101D60AC1A00F3D26B /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A041D60AC1A00F3D26B /* AddContactViewModel.swift */; };
 		8D660A111D60AC1A00F3D26B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D660A051D60AC1A00F3D26B /* AppDelegate.swift */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D24E8411D766F79006CB8CB /* AddContactLocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactLocalDataManager.swift; sourceTree = "<group>"; };
+		8D24E8421D766F79006CB8CB /* ContactListLocalDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListLocalDataManager.swift; sourceTree = "<group>"; };
+		8D24E8431D766F79006CB8CB /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		8D24E8491D766FDE006CB8CB /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8D24E84D1D767228006CB8CB /* MVVM_Contacts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MVVM_Contacts.xcdatamodel; sourceTree = "<group>"; };
 		8D660A031D60AC1A00F3D26B /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		8D660A041D60AC1A00F3D26B /* AddContactViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		8D660A051D60AC1A00F3D26B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,18 +55,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D24E84B1D766FE5006CB8CB /* Contact Model */ = {
+			isa = PBXGroup;
+			children = (
+				8D24E8491D766FDE006CB8CB /* Contact+CoreDataProperties.swift */,
+				8D660A0B1D60AC1A00F3D26B /* Contact.swift */,
+			);
+			name = "Contact Model";
+			sourceTree = "<group>";
+		};
 		8D660A021D60AC1A00F3D26B /* MVVM Contacts Final */ = {
 			isa = PBXGroup;
 			children = (
+				8D24E84B1D766FE5006CB8CB /* Contact Model */,
 				8D660A1A1D60ADDB00F3D26B /* Contacts */,
 				8D660A191D60ADD100F3D26B /* Add Contact */,
+				8D24E8411D766F79006CB8CB /* AddContactLocalDataManager.swift */,
+				8D24E8421D766F79006CB8CB /* ContactListLocalDataManager.swift */,
+				8D24E8431D766F79006CB8CB /* CoreDataStore.swift */,
 				8D660A051D60AC1A00F3D26B /* AppDelegate.swift */,
 				8D660A061D60AC1A00F3D26B /* Assets.xcassets */,
 				8D660A071D60AC1A00F3D26B /* LaunchScreen.storyboard */,
 				8D660A091D60AC1A00F3D26B /* Main.storyboard */,
-				8D660A0B1D60AC1A00F3D26B /* Contact.swift */,
 				8D660A0E1D60AC1A00F3D26B /* Info.plist */,
 				8D660A1B1D61158000F3D26B /* Array+Insertion.swift */,
+				8D24E84C1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld */,
 			);
 			path = "MVVM Contacts Final";
 			sourceTree = "<group>";
@@ -166,13 +189,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D24E8441D766F79006CB8CB /* AddContactLocalDataManager.swift in Sources */,
 				8D660A1C1D61158000F3D26B /* Array+Insertion.swift in Sources */,
+				8D24E84E1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld in Sources */,
 				8D660A151D60AC1A00F3D26B /* Contact.swift in Sources */,
 				8D660A171D60AC1A00F3D26B /* ContactsViewModel.swift in Sources */,
+				8D24E8461D766F79006CB8CB /* CoreDataStore.swift in Sources */,
 				8D660A111D60AC1A00F3D26B /* AppDelegate.swift in Sources */,
+				8D24E84A1D766FDE006CB8CB /* Contact+CoreDataProperties.swift in Sources */,
 				8D660A0F1D60AC1A00F3D26B /* AddContactViewController.swift in Sources */,
 				8D660A101D60AC1A00F3D26B /* AddContactViewModel.swift in Sources */,
 				8D660A161D60AC1A00F3D26B /* ContactsViewController.swift in Sources */,
+				8D24E8451D766F79006CB8CB /* ContactListLocalDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +353,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8D24E84C1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8D24E84D1D767228006CB8CB /* MVVM_Contacts.xcdatamodel */,
+			);
+			currentVersion = 8D24E84D1D767228006CB8CB /* MVVM_Contacts.xcdatamodel */;
+			path = MVVM_Contacts.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8D676C761D5FBB3200F3B088 /* Project object */;
 }

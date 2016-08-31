@@ -7,19 +7,20 @@
 //
 
 import Foundation
+import CoreData
 
-public class Contact {
-    var firstName = ""
-    var lastName = ""
-
-    init(firstName: String, lastName: String) {
-        self.firstName = firstName
-        self.lastName = lastName
-    }
+public class Contact: NSManagedObject {
 
     var fullName: String {
         get {
-            return "\(firstName) \(lastName)"
+            var name = ""
+            if let firstName = firstName {
+                name += firstName
+            }
+            if let lastName = lastName {
+                name += " \(lastName)"
+            }
+            return name
         }
     }
 }

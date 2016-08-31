@@ -16,14 +16,12 @@ class ContactsViewModel {
 
     weak var contactsViewModelProtocol: ContactsViewModelProtocol?
     private var contacts: [Contact] = []
+    private var dataManager = ContactListLocalDataManager()
 
     func retrieveContacts(response: () -> Void) {
-        contacts = [Contact(firstName: "Alan", lastName: "Smith"),
-                    Contact(firstName: "Beatrice", lastName: "Davies"),
-                    Contact(firstName: "Chloe", lastName: "Brown"),
-                    Contact(firstName: "Daniel", lastName: "Williams"),
-                    Contact(firstName: "Edward", lastName: "Robinson"),
-                    Contact(firstName: "Frankie", lastName: "Walker")]
+        do {
+            contacts = try dataManager.retrieveContactList()
+        } catch {}
         response()
     }
 

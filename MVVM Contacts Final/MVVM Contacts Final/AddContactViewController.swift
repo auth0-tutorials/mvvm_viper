@@ -20,6 +20,11 @@ class AddContactViewController: UIViewController {
             viewModel.delegate = delegate
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        firstNameTextField.becomeFirstResponder()
+    }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
         guard let firstName = firstNameTextField.text else {

@@ -14,9 +14,12 @@ protocol AddContactViewModelDelegate: class {
 
 class AddContactViewModel {
     weak var delegate: AddContactViewModelDelegate?
+    var dataManager = AddContactLocalDataManager()
 
     func addNewContact(firstName firstName: String, lastName: String) {
-        let contact = Contact(firstName: firstName, lastName: lastName)
-        delegate?.didAddContact(contact)
+        do {
+            let contact = try dataManager.createContact(firstName: firstName, lastName: lastName)
+            delegate?.didAddContact(contact)
+        } catch {}
     }
 }
