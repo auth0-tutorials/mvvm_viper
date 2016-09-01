@@ -52,12 +52,6 @@ protocol ContactListDataManagerInputProtocol: class {
     */
 }
 
-protocol ContactListAPIDataManagerInputProtocol: class {
-    /**
-    * Add here your methods for communication INTERACTOR -> APIDATAMANAGER
-    */
-}
-
 protocol ContactListLocalDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> LOCALDATAMANAGER

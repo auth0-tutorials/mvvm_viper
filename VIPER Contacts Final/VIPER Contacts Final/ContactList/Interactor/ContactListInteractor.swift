@@ -7,7 +7,6 @@ import Foundation
 
 class ContactListInteractor: ContactListInteractorInputProtocol {
     weak var presenter: ContactListInteractorOutputProtocol?
-    var APIDataManager: ContactListAPIDataManagerInputProtocol?
     var localDatamanager: ContactListLocalDataManagerInputProtocol?
 
     func retrieveContacts() {
