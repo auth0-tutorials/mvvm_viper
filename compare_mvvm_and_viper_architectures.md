@@ -26,7 +26,7 @@ tags:
 
 ---
 
-[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, meaning that your project will be divided in 3 parts: _Model_, representing the entities; _View_, representing the interface with which the user interacts; and _Controller_, responsible for connecting the other two pieces. That's how Apple recomends us to organize our iOS projects - which means that everything that is not a View or Model is part of the Controller layer.
+[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, meaning that your project will be structured in 3 parts: _Model_, representing the entities; _View_, representing the interface with which the user interacts; and _Controller_, responsible for connecting the other two pieces. That's how Apple recomends us to organize our iOS projects - which means that everything that is not a View or Model is part of the Controller layer.
 
 However, you problably know that projects can be highly complex: handling network requests, parsing responses, accessing data models, formatting data for the interface, responding to interface events, and so on. You'll end up with enormous Controllers, responsible for all these different things and not reusable at all. In other words, MVC is a nightmare for developers in charge of the maintenance of a project. But how can we accomplish a better separation of concerns and reusability for iOS projects?
 
@@ -68,7 +68,7 @@ The second is an Add Contact screen, with first/last name text fields and cancel
 
 #### Model <a id="model"></a>
 
-The following code is a class to represent the contact and two operator overloading functions. Put it in the **Contact** file.
+The following code is a class to represent the contact and two operator overloading functions. Put it in the **Contact.swift** file.
 
 ```swift
 public class Contact {
@@ -152,7 +152,7 @@ Now take a closer look at the class extension that conforms to the _UITableViewD
 
 Same thing for the class extension that conforms to the _ContactsViewModelProtocol_ protocol. It's only notified that a new _Contact_ instance was added to the data source, so its work is to insert a new row in the table view - that's only an interface update.
 
-Now update your **AddContactViewController** file with the following code:
+Now update your **AddContactViewController.swift** file with the following code:
 
 ```swift
 class AddContactViewController: UIViewController {
@@ -200,7 +200,7 @@ Again, mostly UI operations. Note that it delegates to the View Model the respon
 
 #### View Model
 
-Time to talk about the new kid in town: the View Model layer. First, insert the following code in the _ContactsViewModel_ file.
+Time to talk about the new kid in town: the View Model layer. First, insert the following code in the **ContactsViewModel.swift** file.
 
 ```swift
 protocol ContactsViewModelProtocol: class {
@@ -240,7 +240,7 @@ First thing to remember as a rule of thumb: View Model is not responsible for us
 
 This file has a few mocked contacts and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view that there are changes in the data source when a new contact is added.
 
-Finally, the last file to be updated is **AddContactViewModel**.
+Finally, the last file to be updated is **AddContactViewModel.swift**.
 
 ```swift
 protocol AddContactViewModelDelegate: class {
@@ -284,13 +284,172 @@ Comparing to MVX styles, Viper has a few key differences in the distribution of 
 - Entities are plain data structures, transferring the access logic that usually belongs to Model to the Interactor.
 - ViewModel (and Controller in MVC) responsibilities are shared among Interactor and Presenter.
 
-Again, it's time to get the hands dirty and explore the VIPER architecture with an example app.
+Again, it's time to get the hands dirty and explore the VIPER architecture with an example app. For the sake of simplicity, we will explore only the Contact List module. The code for the Add Contact module can be found in the starter project (_VIPER Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/)).
 
 ### Contacts App
 
+#### View
+
+The view is represented by the elements in the **Main.storyboard** file and the **ContactListView** class. It is passive; only passes interface events along to the presenter, and updates itself when notified by the presenter. Put the following code in the **ContactListView.swift**.
+
+```swift
+import Foundation
+import UIKit
+
+class ContactListView: UIViewController {
+
+    @IBOutlet var tableView: UITableView!
+    var presenter: ContactListPresenterProtocol?
+    var contactList: [ContactViewModel] = []
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter?.viewDidLoad()
+
+        tableView.tableFooterView = UIView()
+    }
+
+    @IBAction func didClickOnAddButton(sender: UIBarButtonItem) {
+        presenter?.addNewContact(from: self)
+    }
+
+}
+
+extension ContactListView: ContactListViewProtocol {
+
+    func reloadInterface(with contacts: [ContactViewModel]) {
+        contactList = contacts
+        tableView.reloadData()
+    }
+
+    func didInsertContact(contact: ContactViewModel) {
+        let insertionIndex = contactList.insertionIndex(of: contact) { $0 < $1 }
+        contactList.insert(contact, atIndex: insertionIndex)
+
+        let indexPath = NSIndexPath(forRow: insertionIndex, inSection: 0)
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        tableView.endUpdates()
+    }
+
+}
+
+extension ContactListView: UITableViewDataSource {
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = contactList[indexPath.row].fullName
+        return cell
+    }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contactList.count
+    }
+
+}
+```
+
+The view sends _viewDidLoad_ and _didClickOnAddButton_ events to the presenter. In the former, the presenter will ask the interactor for data; in the latter, the presenter will ask the route layer to present the Add Contact module.
+
+Methods from _ContactListViewProtocol_ are called from the presenter, either when the contacts list is retrieved or when a new contact is added. In both situations, the data in the view only contains the information needed for display.
+
+Finally, there are the implementations of the _UITableViewDataSource_ methods, updating the interface elements with the retrieved data.
+
+#### Interactor
+
+The interactor in our example is quite simple. It only asks the local data manager for data - it does not care if the local manager is using Core Data, [Realm](https://realm.io) or any other data storage solution. The following code is part of the **ContactListInteractor.swift** file:
+
+```swift
+import Foundation
+
+class ContactListInteractor: ContactListInteractorInputProtocol {
+    weak var presenter: ContactListInteractorOutputProtocol?
+    var localDatamanager: ContactListLocalDataManagerInputProtocol?
+
+    func retrieveContacts() {
+        do {
+            if let contactList = try localDatamanager?.retrieveContactList() {
+                presenter?.didRetrieveContacts(contactList)
+            } else {
+                presenter?.didRetrieveContacts([])
+            }
+
+        } catch {
+            presenter?.didRetrieveContacts([])
+        }
+    }
+
+}
+```
+After retrieving data, the interactor notifies the presenter and sends what was retrieved. As an alternative for this implementation, the interactor can also [propagate the error](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID508) to the presenter, which will then be responsible for formatting a error object to be displayed in the view.
+
+#### Presenter
+
+This is the central point in the VIPER architecture. The communication between view and the other layers (interactor and and router) passes through the presenter. Let's see how things work by placing the following code in the **ContactListPresenter.swift** file.
+
+```swift
+import Foundation
+
+class ContactListPresenter: ContactListPresenterProtocol {
+    weak var view: ContactListViewProtocol?
+    var interactor: ContactListInteractorInputProtocol?
+    var wireFrame: ContactListWireFrameProtocol?
+
+    func viewDidLoad() {
+        interactor?.retrieveContacts()
+    }
+
+    func addNewContact(from view: ContactListView) {
+        wireFrame?.presentAddContactScreen(from: view)
+    }
+
+}
+
+extension ContactListPresenter: ContactListInteractorOutputProtocol {
+
+    func didRetrieveContacts(contacts: [Contact]) {
+        view?.reloadInterface(with: contacts.map() {
+            return ContactViewModel(fullName: $0.fullName)
+        })
+    }
+
+}
+
+extension ContactListPresenter: AddModuleDelegate {
+
+    func didAddContact(contact: Contact) {
+        let contactViewModel = ContactViewModel(fullName: contact.fullName)
+        view?.didInsertContact(contactViewModel)
+    }
+
+    func didCancelAddContact() {}
+
+}
+```
+
+When the view is loaded, it notifies the presenter, which asks the interactor for data. When the add button is clicked, it notifies the presenter, which asks the router layer to show the add contacts screen.
+
+Also, when the contacts list is retrieved, the presenter formats the data and sends it back to the view. It is also responsible for implementing the Add Contact module delegate. This means that the presenter will be notified when a new contact is added, format it and send it to the view.
+
+As you may have noticed, presenters might get large. When this happens, it is interesting to separate it in two modules: the presenter, which will only receives data and format it back to the view; and event handler, which will respond to interface events.
+
 #### Entity
 
-This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the same code found [here](#model) in the **Contacts** file.
+This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the same code found [here](#model) in the **Contact.swift** file, and add the following View Model struct.
+
+```swift
+public struct ContactViewModel {
+    var fullName = ""
+}
+```
+
+The view model contains the fields that the presenter formats and view needs to display. The _Contact_ class is a subclass of _NSManagedObject_, containing the entity fields exactly as it is in the Core Data model.
+
+#### Router
+
+Last but not least, there is the router layer.
 
 ### Conclusion
 
