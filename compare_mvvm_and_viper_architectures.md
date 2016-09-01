@@ -449,7 +449,56 @@ The view model contains the fields that the presenter formats and view needs to 
 
 #### Router
 
-Last but not least, there is the router layer.
+Last but not least, there is the router layer. The responsibility of navigating between modules is shared between the presenter and the wireframe. The presenter receives the user input and knows when to navigate, and the wireframe knows how to navigate. Put the following code in the **ContactListWireFrame.swift** file.
+
+```swift
+import Foundation
+import UIKit
+
+class ContactListWireFrame: ContactListWireFrameProtocol {
+
+    class func createContactListModule() -> UIViewController {
+        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("ContactsNavigationController")
+        if let view = navController.childViewControllers.first as? ContactListView {
+            let presenter: protocol<ContactListPresenterProtocol, ContactListInteractorOutputProtocol> = ContactListPresenter()
+            let interactor: ContactListInteractorInputProtocol = ContactListInteractor()
+            let localDataManager: ContactListLocalDataManagerInputProtocol = ContactListLocalDataManager()
+            let wireFrame: ContactListWireFrameProtocol = ContactListWireFrame()
+
+            view.presenter = presenter
+            presenter.view = view
+            presenter.wireFrame = wireFrame
+            presenter.interactor = interactor
+            interactor.presenter = presenter
+            interactor.localDatamanager = localDataManager
+
+            return navController
+        }
+        return UIViewController()
+    }
+
+    static var mainStoryboard: UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+    }
+
+    func presentAddContactScreen(from view: ContactListViewProtocol) {
+
+        guard let delegate = view.presenter as? AddModuleDelegate else {
+            return
+        }
+
+        let addContactsView = AddContactWireFrame.createAddContactModule(with: delegate)
+        if let sourceView = view as? UIViewController {
+            sourceView.presentViewController(addContactsView, animated: true, completion: nil)
+        }
+    }
+
+}
+```
+
+Since the wireframe is responsible for creating a module, it is convenient to set all the dependencies here. When presenting another module, the wireframe receives the object which will present it, and asks another wireframe for the presented module. It also passes the required data for the created module (in this case, only a delegate to receive the added contact).
+
+The router layer brings a good opportunity to [avoid using storyboards segues](https://www.toptal.com/ios/ios-user-interfaces-storyboards-vs-nibs-vs-custom-code) and deal with view controller transitions on code. Since storyboards don't offer a decent solution for passing data between view controllers, this doesn't always mean more code. All we get is more reusability, better separation of concerns and maintanability of a project.
 
 ### Conclusion
 
