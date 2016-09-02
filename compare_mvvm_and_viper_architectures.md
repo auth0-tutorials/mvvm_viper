@@ -38,11 +38,11 @@ We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining
 
 MVVM stands for **Model-View-ViewModel**. It's a different way to arrange responsibilities, changing a few roles compared to MVC.
 
-1. **Model** - This is the layer that does not change if compared to MVC. It still represents the data-model layer of your application, and can hold business logic responsibilities as well. You may also want to create a manager class to manipulate the model objects.
+1. **Model** - This is the layer that does not change if compared to MVC. It still represents the data-model layer of your application, and can hold business logic responsibilities as well. You may also want to create a manager class to manipulate the model objects and a network manager class to handle requests and data parsing.
 
 2. **View** - Here things start to change. The _View_ layer in MVVM englobes the interface (UIView subclasses, xib and storyboard files), the view logic (animations, drawing) and handling user input events (button clicks, transitions, etc). Those are responsibilities of the _View_ and the _Controller_ in the MVC. This means that your views will remain the same, while your controllers will only contain a small subset of the responsibilities they have in MVC - and will get reasonably smaller than usual
 
-3. **ViewModel** - That's the new home for most of your usual Controller code. _ViewModel_ will request the data from the model layer (it might be a local access to a database or a network request) and pass it back to the view, formatted in the way it will be displayed. But it's a two-way mechanism: user input, when necessary, will also get through the ViewModel to update the Model. It's also interesting to create a separated network manager class to handle requests and data parsing.
+3. **ViewModel** - That's the new home for most of your usual Controller code. _ViewModel_ will request the data from the model layer (it might be a local access to a database or a network request) and pass it back to the view, formatted in the way it will be displayed. But it's a two-way mechanism: user input, when necessary, will also get through the ViewModel to update the Model. Since the ViewModel controls exactly what is being displayed, it's useful to use some data binding mechanism between the two layers. 
 
 Comparing to MVC, you change from a architecture that looks like this:
 
@@ -51,6 +51,8 @@ Comparing to MVC, you change from a architecture that looks like this:
 For something that looks like this:
 
 // image
+
+In which the View layer corresponds to UIView and UIViewController classes and subclasses.
 
 Now it's time to get hands dirty to grasp the new concepts. So let's build an example app structured using MVVM!
 
@@ -286,6 +288,8 @@ Comparing to MVX styles, Viper has a few key differences in the distribution of 
 
 Again, it's time to get the hands dirty and explore the VIPER architecture with an example app. For the sake of simplicity, we will explore only the Contact List module. The code for the Add Contact module can be found in the starter project (_VIPER Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/)).
 
+> Note: if you consider making your application based in VIPER, please do not create all files manually - you can check a VIPER generator code like [VIPER gen](https://github.com/pepibumur/viper-module-generator?utm_source=swifting.io) or [Generamba](https://github.com/rambler-ios/Generamba).
+
 ### Contacts App
 
 #### View
@@ -384,6 +388,8 @@ class ContactListInteractor: ContactListInteractorInputProtocol {
 }
 ```
 After retrieving data, the interactor notifies the presenter and sends what was retrieved. As an alternative for this implementation, the interactor can also [propagate the error](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID508) to the presenter, which will then be responsible for formatting a error object to be displayed in the view.
+
+> Note: as you may have noticed, each layer in VIPER is implementing a protocol. This way, classes depend on abstractions instead of concretions, conforming to the Dependency Inversion principle.
 
 #### Presenter
 
