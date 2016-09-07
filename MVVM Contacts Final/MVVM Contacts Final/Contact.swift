@@ -24,11 +24,3 @@ public class Contact: NSManagedObject {
         }
     }
 }
-
-public func <(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
-}
-
-public func >(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
-}

@@ -9,37 +9,35 @@
 import Foundation
 import UIKit
 
-
 class AddContactViewController: UIViewController {
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
-    let viewModel = AddContactViewModel()
-    weak var delegate: AddContactViewModelDelegate? {
-        didSet {
-            viewModel.delegate = delegate
-        }
-    }
-    
+    var contactsViewModelController: ContactViewModelController?
+    var didAddContact: ((ContactViewModel, Int) -> Void)?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         firstNameTextField.becomeFirstResponder()
     }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
-        guard let firstName = firstNameTextField.text else {
-            return
+        guard let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text
+            else {
+                return
         }
-        guard let lastName = lastNameTextField.text else {
-            return
-        }
+
         if firstName.isEmpty || lastName.isEmpty {
             showEmptyNameAlert()
             return
         }
+
         dismissViewControllerAnimated(true) { [unowned self] in
-            self.viewModel.addNewContact(firstName: firstName, lastName: lastName)
+            self.contactsViewModelController?.createContact(firstName: firstName, lastName: lastName,
+                                                            success: self.didAddContact, failure: nil)
         }
+
     }
 
     @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
@@ -47,8 +45,12 @@ class AddContactViewController: UIViewController {
     }
 
     private func showEmptyNameAlert() {
-        let alertView = UIAlertController(title: "Error",
-                                          message: "A contact must have first and last names",
+        showMessage(title: "Error", message: "A contact must have first and last names")
+    }
+
+    private func showMessage(title title: String, message: String) {
+        let alertView = UIAlertController(title: title,
+                                          message: message,
                                           preferredStyle: .Alert)
         alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
         presentViewController(alertView, animated: true, completion: nil)

@@ -6,7 +6,29 @@
 import Foundation
 import CoreData
 
-class ContactListLocalDataManager {
+enum PersistenceError: ErrorType {
+    case ManagedObjectContextNotFound
+    case CouldNotCreateObject
+    case ObjectNotFound
+}
+
+class ContactLocalDataManager {
+
+    func createContact(firstName firstName: String, lastName: String) throws -> Contact {
+        guard let managedOC = CoreDataStore.managedObjectContext else {
+            throw PersistenceError.ManagedObjectContextNotFound
+        }
+
+        if let newContact = NSEntityDescription.entityForName(String(Contact),
+                                                              inManagedObjectContext: managedOC) {
+            let contact = Contact(entity: newContact, insertIntoManagedObjectContext: managedOC)
+            contact.firstName = firstName
+            contact.lastName = lastName
+            try managedOC.save()
+            return contact
+        }
+        throw PersistenceError.CouldNotCreateObject
+    }
 
     func retrieveContactList() throws -> [Contact] {
         guard let managedOC = CoreDataStore.managedObjectContext else {

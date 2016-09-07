@@ -12,21 +12,27 @@ import Foundation
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    let viewModel = ContactsViewModel()
+    let contactViewModelController = ContactViewModelController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-        viewModel.contactsViewModelProtocol = self
-        viewModel.retrieveContacts() { [unowned self] in
+        contactViewModelController.retrieveContacts({ [unowned self] in
             self.tableView.reloadData()
-        }
+        }, failure: nil)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let addContactNavigationController = segue.destinationViewController as? UINavigationController
         let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
-        addContactVC?.delegate = viewModel
+
+        addContactVC?.contactsViewModelController = contactViewModelController
+        addContactVC?.didAddContact = { [unowned self] (contactViewModel, index) in
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            self.tableView.endUpdates()
+        }
     }
 
 }
@@ -34,23 +40,17 @@ class ContactsViewController: UIViewController {
 extension ContactsViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell")!
-        cell.textLabel?.text = viewModel.contactFullName(at: indexPath.row)
-        return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") as? ContactsTableViewCell
+        guard let contactsCell = cell else {
+            return UITableViewCell()
+        }
+
+        contactsCell.cellModel = contactViewModelController.viewModel(at: indexPath.row)
+        return contactsCell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.contactsCount
+        return contactViewModelController.contactsCount
     }
 
-}
-
-extension ContactsViewController: ContactsViewModelProtocol {
-
-    func didInsertContact(at index: Int) {
-        let indexPath = NSIndexPath(forRow: index, inSection: 0)
-        tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
-        tableView.endUpdates()
-    }
 }
