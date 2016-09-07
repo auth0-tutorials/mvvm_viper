@@ -8,7 +8,7 @@
         <!--Navigation Controller-->
         <scene sceneID="cVs-Ap-iGI">
             <objects>
-                <navigationController id="Lba-Ca-ffN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ContactsNavigationController" id="Lba-Ca-ffN" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="a39-92-7lW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -29,7 +29,7 @@
         <!--Contacts-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ContactsViewController" customModule="VIPER_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ContactListView" customModule="VIPER_Contacts_Final" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -38,7 +38,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="BJV-eI-9zY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="BJV-eI-9zY">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -81,6 +81,9 @@
                     <navigationItem key="navigationItem" title="Contacts" id="i46-CO-13g">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Cgd-uW-q3s">
                             <color key="tintColor" red="0.9137254901960784" green="0.33333333333333331" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="didClickOnAddButton:" destination="BYZ-38-t0r" id="Ldc-gF-fWf"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -116,7 +119,7 @@
         <!--New Contact-->
         <scene sceneID="tLZ-gM-Szl">
             <objects>
-                <viewController id="k1Q-Qo-l2E" customClass="AddContactViewController" customModule="VIPER_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="k1Q-Qo-l2E" customClass="AddContactView" customModule="VIPER_Contacts_Final" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bDs-dZ-aqJ"/>
                         <viewControllerLayoutGuide type="bottom" id="0jZ-3C-xAG"/>
