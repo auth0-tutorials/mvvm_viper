@@ -150,6 +150,7 @@ extension ContactsViewController: UITableViewDataSource {
     }
 
 }
+
 ```
 
 A quick look is enough to realize that this class has mostly interface responsibilities. It also has navigation flow dependency in __prepareForSegue(::)__ - something that will change in VIPER with the Router layer.
@@ -175,6 +176,7 @@ class ContactsTableViewCell: UITableViewCell {
         textLabel?.text = cellModel?.fullName
     }
 }
+
 ```
 
 Now replace your **AddContactViewController.swift** file with the following code:
@@ -231,6 +233,7 @@ class AddContactViewController: UIViewController {
     }
 
 }
+
 ```
 Again, mostly UI operations. Note that it delegates to the __ViewModelController__ the responsibility of creating a new _Contact_ instance on _didClickOnDoneButton(:)_.
 
@@ -252,6 +255,7 @@ public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
 public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
     return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
 }
+
 ```
 
 And the following code in the **ContactViewModelController** file.
@@ -340,7 +344,7 @@ Again, it's time to get the hands dirty and explore the VIPER architecture with 
 
 #### View
 
-The view is represented by the elements in the **Main.storyboard** file and the **ContactListView** class. It is passive; only passes interface events along to the presenter, and updates itself when notified by the presenter. Put the following code in the **ContactListView.swift**.
+The view is represented by the elements in the **Main.storyboard** file and the **ContactListView** class. It is passive; only passes interface events along to the presenter, and updates itself when notified by the presenter. Replace the content in **ContactListView.swift** with the following code.
 
 ```swift
 import Foundation
@@ -399,6 +403,7 @@ extension ContactListView: UITableViewDataSource {
     }
 
 }
+
 ```
 
 The view sends _viewDidLoad_ and _didClickOnAddButton_ events to the presenter. In the former, the presenter will ask the interactor for data; in the latter, the presenter will ask the route layer to present the Add Contact module.
@@ -432,6 +437,7 @@ class ContactListInteractor: ContactListInteractorInputProtocol {
     }
 
 }
+
 ```
 After retrieving data, the interactor notifies the presenter and sends what was retrieved. As an alternative for this implementation, the interactor can also [propagate the error](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html#//apple_ref/doc/uid/TP40014097-CH42-ID508) to the presenter, which will then be responsible for formatting a error object to be displayed in the view.
 
@@ -448,37 +454,38 @@ class ContactListPresenter: ContactListPresenterProtocol {
     weak var view: ContactListViewProtocol?
     var interactor: ContactListInteractorInputProtocol?
     var wireFrame: ContactListWireFrameProtocol?
-
+    
     func viewDidLoad() {
         interactor?.retrieveContacts()
     }
-
-    func addNewContact(from view: ContactListView) {
+    
+    func addNewContact(from view: ContactListViewProtocol) {
         wireFrame?.presentAddContactScreen(from: view)
     }
-
+    
 }
 
 extension ContactListPresenter: ContactListInteractorOutputProtocol {
-
+    
     func didRetrieveContacts(contacts: [Contact]) {
         view?.reloadInterface(with: contacts.map() {
             return ContactViewModel(fullName: $0.fullName)
-        })
+            })
     }
-
+    
 }
 
 extension ContactListPresenter: AddModuleDelegate {
-
+    
     func didAddContact(contact: Contact) {
         let contactViewModel = ContactViewModel(fullName: contact.fullName)
         view?.didInsertContact(contactViewModel)
     }
-
+    
     func didCancelAddContact() {}
-
+    
 }
+
 ```
 
 When the view is loaded, it notifies the presenter, which asks the interactor for data. When the add button is clicked, it notifies the presenter, which asks the router layer to show the add contacts screen.
@@ -489,7 +496,7 @@ As you may have noticed, presenters might get large. When this happens, it is in
 
 #### Entity
 
-This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the following code in the **Contact.swift** file.
+This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Replace the **Contact.swift** file with the following code.
 
 ```swift
 import Foundation
@@ -530,7 +537,7 @@ The view model contains the fields that the presenter formats and view needs to 
 
 #### Router
 
-Last but not least, there is the router layer. The responsibility of navigating between modules is shared between the presenter and the wireframe. The presenter receives the user input and knows when to navigate, and the wireframe knows how to navigate. Put the following code in the **ContactListWireFrame.swift** file.
+Last but not least, there is the router layer. The responsibility of navigating between modules is shared between the presenter and the wireframe. The presenter receives the user input and knows when to navigate, and the wireframe knows how to navigate. Replace the **ContactListWireFrame.swift** file with the following code.
 
 ```swift
 import Foundation
@@ -575,6 +582,7 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
     }
 
 }
+
 ```
 
 Since the wireframe is responsible for creating a module, it is convenient to set all the dependencies here. When presenting another module, the wireframe receives the object which will present it, and asks another wireframe for the presented module. It also passes the required data for the created module (in this case, only a delegate to receive the added contact).
