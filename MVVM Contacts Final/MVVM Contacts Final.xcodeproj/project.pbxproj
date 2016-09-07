@@ -55,50 +55,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8D24E84B1D766FE5006CB8CB /* Model */ = {
+		8D24E84B1D766FE5006CB8CB /* Contact Model */ = {
 			isa = PBXGroup;
 			children = (
 				8D24E8491D766FDE006CB8CB /* Contact+CoreDataProperties.swift */,
 				8D660A0B1D60AC1A00F3D26B /* Contact.swift */,
 			);
-			name = Model;
+			name = "Contact Model";
 			sourceTree = "<group>";
 		};
 		8D660A021D60AC1A00F3D26B /* MVVM Contacts Final */ = {
 			isa = PBXGroup;
 			children = (
-				8DF7220D1D7FA1F9007F6129 /* View Model */,
-				8D24E84B1D766FE5006CB8CB /* Model */,
-				8D660A1A1D60ADDB00F3D26B /* Contacts */,
-				8D660A191D60ADD100F3D26B /* Add Contact */,
-				8D24E8411D766F79006CB8CB /* ContactLocalDataManager.swift */,
-				8D24E8431D766F79006CB8CB /* CoreDataStore.swift */,
+				8DF722261D804809007F6129 /* DataManager */,
+				8DF7220D1D7FA1F9007F6129 /* Contact ViewModel */,
+				8D24E84B1D766FE5006CB8CB /* Contact Model */,
+				8D660A1A1D60ADDB00F3D26B /* Contacts View */,
+				8D660A191D60ADD100F3D26B /* AddContact View */,
 				8D660A051D60AC1A00F3D26B /* AppDelegate.swift */,
 				8D660A061D60AC1A00F3D26B /* Assets.xcassets */,
 				8D660A071D60AC1A00F3D26B /* LaunchScreen.storyboard */,
 				8D660A091D60AC1A00F3D26B /* Main.storyboard */,
 				8D660A0E1D60AC1A00F3D26B /* Info.plist */,
 				8D660A1B1D61158000F3D26B /* Array+Insertion.swift */,
-				8D24E84C1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld */,
 			);
 			path = "MVVM Contacts Final";
 			sourceTree = "<group>";
 		};
-		8D660A191D60ADD100F3D26B /* Add Contact */ = {
+		8D660A191D60ADD100F3D26B /* AddContact View */ = {
 			isa = PBXGroup;
 			children = (
 				8D660A031D60AC1A00F3D26B /* AddContactViewController.swift */,
 			);
-			name = "Add Contact";
+			name = "AddContact View";
 			sourceTree = "<group>";
 		};
-		8D660A1A1D60ADDB00F3D26B /* Contacts */ = {
+		8D660A1A1D60ADDB00F3D26B /* Contacts View */ = {
 			isa = PBXGroup;
 			children = (
 				8D660A0C1D60AC1A00F3D26B /* ContactsViewController.swift */,
 				8D24E8531D7E5711006CB8CB /* ContactsTableViewCell.swift */,
 			);
-			name = Contacts;
+			name = "Contacts View";
 			sourceTree = "<group>";
 		};
 		8D676C751D5FBB3200F3B088 = {
@@ -117,13 +115,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8DF7220D1D7FA1F9007F6129 /* View Model */ = {
+		8DF7220D1D7FA1F9007F6129 /* Contact ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				8D24E8511D7E50A5006CB8CB /* ContactViewModelController.swift */,
 				8DF7220E1D7FA20B007F6129 /* ContactViewModel.swift */,
 			);
-			name = "View Model";
+			name = "Contact ViewModel";
+			sourceTree = "<group>";
+		};
+		8DF722261D804809007F6129 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				8D24E8411D766F79006CB8CB /* ContactLocalDataManager.swift */,
+				8D24E8431D766F79006CB8CB /* CoreDataStore.swift */,
+				8D24E84C1D767228006CB8CB /* MVVM_Contacts.xcdatamodeld */,
+			);
+			name = DataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
