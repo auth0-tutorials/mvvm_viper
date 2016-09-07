@@ -1,11 +1,3 @@
-//
-//  Contact.swift
-//  VIPER Contacts Final
-//
-//  Created by Rafael Sacchi on 8/30/16.
-//  Copyright © 2016 Rafael Sacchi. All rights reserved.
-//
-
 import Foundation
 import CoreData
 

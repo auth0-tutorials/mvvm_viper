@@ -1,8 +1,3 @@
-//
-// Created by AUTHOR
-// Copyright (c) YEAR AUTHOR. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -28,7 +23,7 @@ protocol ContactListPresenterProtocol: class {
 
     // VIEW -> PRESENTER
     func viewDidLoad()
-    func addNewContact(from view: ContactListView)
+    func addNewContact(from view: ContactListViewProtocol)
 }
 
 protocol ContactListInteractorOutputProtocol: class {

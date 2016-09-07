@@ -1,8 +1,3 @@
-//
-// Created by AUTHOR
-// Copyright (c) YEAR AUTHOR. All rights reserved.
-//
-
 import Foundation
 
 class ContactListPresenter: ContactListPresenterProtocol {
@@ -14,7 +9,7 @@ class ContactListPresenter: ContactListPresenterProtocol {
         interactor?.retrieveContacts()
     }
 
-    func addNewContact(from view: ContactListView) {
+    func addNewContact(from view: ContactListViewProtocol) {
         wireFrame?.presentAddContactScreen(from: view)
     }
 
