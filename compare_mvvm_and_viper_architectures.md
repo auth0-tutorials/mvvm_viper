@@ -72,7 +72,7 @@ Now it's time to get hands dirty to grasp the new concepts. So let's build an ex
 
 #### Model <a id="model"></a>
 
-The following code is a class to represent the contact and two operator overloading functions. Put it in the **Contact.swift** file.
+The following code is a class to represent the contact and two operator overloading functions. Replace the content in **Contact.swift** file with the following code.
 
 ```swift
 import Foundation
@@ -99,7 +99,7 @@ A Contact has only these two fields, _firstName_ and _lastName_. A stored proper
 
 #### View
 
-There are three files responsible for the view layer: the **Main** storyboard, with views already laid out in the starter project; the **ContactsViewController**, that displays the contacts list in a table view; and the **AddContactViewController**, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for **ContactsViewController**:
+There are three files responsible for the view layer: the **Main** storyboard, with views already laid out in the starter project; the **ContactsViewController**, that displays the contacts list in a table view; and the **AddContactViewController**, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for **ContactsViewController**. Replace the **ContactsViewController.swift** file with the following code.
 
 ```swift
 import UIKit
@@ -158,7 +158,26 @@ Now take a closer look at the class extension that conforms to the _UITableViewD
 
 Same thing happens with the closure that is called when a contact is created. Its only work is to insert a new row in the table view - that's only an interface update!
 
-Now update your **AddContactViewController.swift** file with the following code:
+Now it's necessary to guarantee the data binding between the _UITableViewCell_ subclass and the ViewModel. Replace the **ContactsTableViewCell.swift** file with the following code.
+
+```swift
+import Foundation
+import UIKit
+
+class ContactsTableViewCell: UITableViewCell {
+    var cellModel: ContactViewModel? {
+        didSet {
+            bindViewModel()
+        }
+    }
+
+    func bindViewModel() {
+        textLabel?.text = cellModel?.fullName
+    }
+}
+```
+
+Now replace your **AddContactViewController.swift** file with the following code:
 
 ```swift
 import Foundation
