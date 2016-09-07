@@ -38,26 +38,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="BJV-eI-9zY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="54" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="BJV-eI-9zY">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactCell" textLabel="ECz-Rh-sI7" imageView="3Be-cb-SSE" style="IBUITableViewCellStyleDefault" id="6Xh-ke-e9S">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactCell" textLabel="ECz-Rh-sI7" imageView="3Be-cb-SSE" style="IBUITableViewCellStyleDefault" id="6Xh-ke-e9S" customClass="ContactsTableViewCell" customModule="MVVM_Contacts_Starter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="1" width="375" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Xh-ke-e9S" id="yj9-vw-nGo">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="53.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ECz-Rh-sI7">
-                                                    <rect key="frame" x="60" y="0.0" width="300" height="43.5"/>
+                                                    <rect key="frame" x="60" y="0.0" width="300" height="53.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="profile_placeholder" id="3Be-cb-SSE">
-                                                    <rect key="frame" x="15" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="15" y="11" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -116,7 +116,7 @@
             </objects>
             <point key="canvasLocation" x="566.5" y="-320.5"/>
         </scene>
-        <!--New Contact-->
+        <!--Add Contact-->
         <scene sceneID="tLZ-gM-Szl">
             <objects>
                 <viewController id="k1Q-Qo-l2E" customClass="AddContactViewController" customModule="MVVM_Contacts_Starter" customModuleProvider="target" sceneMemberID="viewController">
@@ -138,7 +138,7 @@
                                             <constraint firstAttribute="height" constant="21" id="i81-qA-Y3I"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -178,7 +178,7 @@
                                             <constraint firstAttribute="width" constant="91" id="gg9-sM-8eO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -215,7 +215,7 @@
                             <constraint firstItem="arS-Nw-7F5" firstAttribute="top" secondItem="8rr-cc-sym" secondAttribute="bottom" constant="20" id="Zim-dk-8R7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="New Contact" id="ydN-B9-lpV">
+                    <navigationItem key="navigationItem" title="Add Contact" id="ydN-B9-lpV">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="OVH-pu-So2">
                             <color key="tintColor" red="0.91372549020000005" green="0.33333333329999998" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
