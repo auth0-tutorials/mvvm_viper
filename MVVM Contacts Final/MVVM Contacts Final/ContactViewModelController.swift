@@ -8,14 +8,6 @@
 
 import Foundation
 
-protocol ContactViewModelControllerDelegate {
-    func didFetchContacts()
-    func didFailFetchingContacts()
-
-    func didAddContact(contact: ContactViewModel, at index: Int)
-    func didFailAddingContact()
-}
-
 class ContactViewModelController {
 
     private var contactViewModelList: [ContactViewModel] = []

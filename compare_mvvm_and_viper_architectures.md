@@ -32,7 +32,19 @@ However, you problably know that projects can be highly complex: handling networ
 
 We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [Massive View Controller](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how these two different architectures are structured, build an example application and compare when it's the case to use one or the other.
 
-## MVVM with example
+### Example
+
+We'll build a Contacts app. You can follow the example in [this repository](https://github.com/auth0-tutorials/mvvm_viper/). The starter folders, for both MVVM and VIPER sections, contain the initial setup and only need the code from the tutorial to work.
+
+The app has two screens: the first is a list of contacts, displayed in table view with their full name and a placeholder profile image.
+
+<img src="img/contacts.png" width="300">
+
+The second is an Add Contact screen, with first/last name text fields and cancel/done button items.
+
+<img src="img/add_contact.png" width="300">
+
+## MVVM
 
 ### How it works
 
@@ -58,44 +70,30 @@ Now it's time to get hands dirty to grasp the new concepts. So let's build an ex
 
 ### MVVM Contacts App
 
-We'll build a Contacts app. You can follow the example in the _MVVM Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
-
-The app has two screens: the first is a list of contacts, displayed in table view with their full name and a placeholder profile image.
-
-<img src="img/contacts.png" width="300">
-
-The second is an Add Contact screen, with first/last name text fields and cancel/done button items.
-
-<img src="img/add_contact.png" width="300">
-
 #### Model <a id="model"></a>
 
 The following code is a class to represent the contact and two operator overloading functions. Put it in the **Contact.swift** file.
 
 ```swift
-public class Contact {
-    var firstName = ""
-    var lastName = ""
+import Foundation
+import CoreData
 
-    init(firstName: String, lastName: String) {
-        self.firstName = firstName
-        self.lastName = lastName
-    }
+public class Contact: NSManagedObject {
 
     var fullName: String {
         get {
-            return "\(firstName) \(lastName)"
+            var name = ""
+            if let firstName = firstName {
+                name += firstName
+            }
+            if let lastName = lastName {
+                name += " \(lastName)"
+            }
+            return name
         }
     }
 }
 
-public func <(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
-}
-
-public func >(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
-}
 ```
 A Contact has only these two fields, _firstName_ and _lastName_. A stored property is responsible for returning the _fullName_, and the operators _>_ and _<_ have their implementation to be used when an instance is inserted in a ordered list.
 
@@ -104,21 +102,33 @@ A Contact has only these two fields, _firstName_ and _lastName_. A stored proper
 There are three files responsible for the view layer: the **Main** storyboard, with views already laid out in the starter project; the **ContactsViewController**, that displays the contacts list in a table view; and the **AddContactViewController**, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for **ContactsViewController**:
 
 ```swift
+import UIKit
+import Foundation
+
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
-    let viewModel = ContactsViewModel()
+    let contactViewModelController = ContactViewModelController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-        viewModel.contactsViewModelProtocol = self
+        contactViewModelController.retrieveContacts({ [unowned self] in
+            self.tableView.reloadData()
+        }, failure: nil)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let addContactNavigationController = segue.destinationViewController as? UINavigationController
         let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
-        addContactVC?.delegate = viewModel
+
+        addContactVC?.contactsViewModelController = contactViewModelController
+        addContactVC?.didAddContact = { [unowned self] (contactViewModel, index) in
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            self.tableView.endUpdates()
+        }
     }
 
 }
@@ -126,62 +136,63 @@ class ContactsViewController: UIViewController {
 extension ContactsViewController: UITableViewDataSource {
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell")!
-        cell.textLabel?.text = viewModel.contactFullName(at: indexPath.row)
-        return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") as? ContactsTableViewCell
+        guard let contactsCell = cell else {
+            return UITableViewCell()
+        }
+
+        contactsCell.cellModel = contactViewModelController.viewModel(at: indexPath.row)
+        return contactsCell
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.contactsCount
+        return contactViewModelController.contactsCount
     }
 
-}
-
-extension ContactsViewController: ContactsViewModelProtocol {
-
-    func didInsertContact(at index: Int) {
-        let indexPath = NSIndexPath(forRow: index, inSection: 0)
-        tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
-        tableView.endUpdates()
-    }
 }
 ```
 
 A quick look is enough to realize that this class has mostly interface responsibilities. It also has navigation flow dependency in __prepareForSegue(::)__ - something that will change in VIPER with the Router layer.
 
-Now take a closer look at the class extension that conforms to the _UITableViewDataSource_ protocol. The implemented functions don't interact directly with the __Contact__ class in the Model layer - instead, it gets the data the way it will be displayed, already formatted by the __ViewModel__.
+Now take a closer look at the class extension that conforms to the _UITableViewDataSource_ protocol. The implemented functions don't interact directly with the __Contact__ class in the Model layer - instead, it gets the data (represented by the __ViewModel__) the way it will be displayed, already formatted by the __ViewModelController__.
 
-Same thing for the class extension that conforms to the _ContactsViewModelProtocol_ protocol. It's only notified that a new _Contact_ instance was added to the data source, so its work is to insert a new row in the table view - that's only an interface update.
+Same thing happens with the closure that is called when a contact is created. Its only work is to insert a new row in the table view - that's only an interface update!
 
 Now update your **AddContactViewController.swift** file with the following code:
 
 ```swift
+import Foundation
+import UIKit
+
 class AddContactViewController: UIViewController {
 
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
-    let viewModel = AddContactViewModel()
-    weak var delegate: AddContactViewModelDelegate? {
-        didSet {
-            viewModel.delegate = delegate
-        }
+    var contactsViewModelController: ContactViewModelController?
+    var didAddContact: ((ContactViewModel, Int) -> Void)?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        firstNameTextField.becomeFirstResponder()
     }
 
     @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
-        guard let firstName = firstNameTextField.text else {
-            return
+        guard let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text
+            else {
+                return
         }
-        guard let lastName = lastNameTextField.text else {
-            return
-        }
+
         if firstName.isEmpty || lastName.isEmpty {
             showEmptyNameAlert()
             return
         }
+
         dismissViewControllerAnimated(true) { [unowned self] in
-            self.viewModel.addNewContact(firstName: firstName, lastName: lastName)
+            self.contactsViewModelController?.createContact(firstName: firstName, lastName: lastName,
+                                                            success: self.didAddContact, failure: nil)
         }
+
     }
 
     @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
@@ -189,8 +200,12 @@ class AddContactViewController: UIViewController {
     }
 
     private func showEmptyNameAlert() {
-        let alertView = UIAlertController(title: "Error",
-                                          message: "A contact must have first and last names",
+        showMessage(title: "Error", message: "A contact must have first and last names")
+    }
+
+    private func showMessage(title title: String, message: String) {
+        let alertView = UIAlertController(title: title,
+                                          message: message,
                                           preferredStyle: .Alert)
         alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
         presentViewController(alertView, animated: true, completion: nil)
@@ -198,72 +213,83 @@ class AddContactViewController: UIViewController {
 
 }
 ```
-Again, mostly UI operations. Note that it delegates to the View Model the responsibility of creating a new _Contact_ instance on _didClickOnDoneButton(:)_.
+Again, mostly UI operations. Note that it delegates to the __ViewModelController__ the responsibility of creating a new _Contact_ instance on _didClickOnDoneButton(:)_.
 
 #### View Model
 
-Time to talk about the new kid in town: the View Model layer. First, insert the following code in the **ContactsViewModel.swift** file.
+Time to talk about what's new: the View Model layer. First, insert the following code in the **ContactViewModel.swift** file.
 
 ```swift
-protocol ContactsViewModelProtocol: class {
-    func didInsertContact(at index: Int)
+import Foundation
+
+public struct ContactViewModel {
+    var fullName: String
 }
 
-class ContactsViewModel {
+public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
+    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+}
 
-    weak var contactsViewModelProtocol: ContactsViewModelProtocol?
-    private var contacts: [Contact] = [Contact(firstName: "Alan", lastName: "Smith"),
-                                       Contact(firstName: "Beatrice", lastName: "Davies"),
-                                       Contact(firstName: "Chloe", lastName: "Brown"),
-                                       Contact(firstName: "Daniel", lastName: "Williams"),
-                                       Contact(firstName: "Edward", lastName: "Robinson"),
-                                       Contact(firstName: "Frankie", lastName: "Walker")]
+public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
+    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+}
+```
+
+And the following code in the **ContactViewModelController** file.
+
+```swift
+import Foundation
+
+class ContactViewModelController {
+
+    private var contactViewModelList: [ContactViewModel] = []
+    private var dataManager = ContactLocalDataManager()
 
     var contactsCount: Int {
-        return contacts.count
+        return contactViewModelList.count
     }
 
-    func contactFullName(at index: Int) -> String {
-        let contact = contacts[index]
-        return contact.fullName
+    func retrieveContacts(success: (() -> Void)?, failure: (() -> Void)?) {
+        do {
+            let contacts = try dataManager.retrieveContactList()
+            contactViewModelList = contacts.map() { ContactViewModel(fullName: $0.fullName) }
+            success?()
+        } catch {
+            failure?()
+        }
     }
+
+    func viewModel(at index: Int) -> ContactViewModel {
+        return contactViewModelList[index]
+    }
+
+    func createContact(firstName firstName: String, lastName: String,
+                                 success: ((ContactViewModel, Int) -> Void)?,
+                                 failure: (() -> Void)?) {
+        do {
+            let contact = try dataManager.createContact(firstName: firstName, lastName: lastName)
+            let contactViewModel = ContactViewModel(fullName: contact.fullName)
+            let insertionIndex = contactViewModelList.insertionIndex(of: contactViewModel) { $0 < $1 }
+            contactViewModelList.insert(contactViewModel, atIndex: insertionIndex)
+            success?(contactViewModel, insertionIndex)
+        } catch {
+            failure?()
+        }
+    }
+
 }
 
-extension ContactsViewModel: AddContactViewModelDelegate {
-    func didAddContact(contact: Contact) {
-        let insertionIndex = contacts.insertionIndex(of: contact) { $0 < $1 }
-        contacts.insert(contact, atIndex: insertionIndex)
-        contactsViewModelProtocol?.didInsertContact(at: insertionIndex)
-    }
-}
 ```
 
-First thing to remember as a rule of thumb: View Model is not responsible for user interface. A way to guarantee that you're not messing things up is to **never** import UIKit in a View Model file.
+First thing to remember as a rule of thumb: the View Model layers is not responsible for user interface. A way to guarantee that you're not messing things up is to **never** import UIKit in a View Model file.
 
-This file has a few mocked contacts and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view that there are changes in the data source when a new contact is added.
+The _ContactViewModelController_ class retrieves contacts from the local storage and tries to not expose the Model layer. It returns the data formatted in the way that the view asks, and notifies the view that there are changes in the data source when a new contact is added.
 
-Finally, the last file to be updated is **AddContactViewModel.swift**.
-
-```swift
-protocol AddContactViewModelDelegate: class {
-    func didAddContact(contact: Contact)
-}
-
-class AddContactViewModel {
-    weak var delegate: AddContactViewModelDelegate?
-
-    func addNewContact(firstName firstName: String, lastName: String) {
-        let contact = Contact(firstName: firstName, lastName: lastName)
-        delegate?.didAddContact(contact)
-    }
-}
-```
-
-This is the simplest file of all. It only creates a new contact and notifies its delegate of the creation, which happens to be the _ContactsViewModel_. In a real world scenario, this would involve performing a network request and/or inserting in a local database. But none of them should be a View Model role - networking and database should have their own managers.
+In a real world scenario, this would involve performing a network request besides inserting in a local database. But none of them should be a View Model role anyway - networking and database should have their own managers.
 
 That's it for MVVM. You may find this approach more testable, mantainable and distributed than usual MVC. So let's talk about VIPER and check how the two architecture styles compare.
 
-## VIPER with example
+## VIPER
 
 ### How it works
 
@@ -288,7 +314,7 @@ Comparing to MVX styles, Viper has a few key differences in the distribution of 
 
 Again, it's time to get the hands dirty and explore the VIPER architecture with an example app. For the sake of simplicity, we will explore only the Contact List module. The code for the Add Contact module can be found in the starter project (_VIPER Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/)).
 
-> Note: if you consider making your application based in VIPER, please do not create all files manually - you can check a VIPER generator code like [VIPER gen](https://github.com/pepibumur/viper-module-generator?utm_source=swifting.io) or [Generamba](https://github.com/rambler-ios/Generamba).
+> Note: if you consider making your application based in VIPER, please do not create all files manually - you can check a VIPER code generator like [VIPER gen](https://github.com/pepibumur/viper-module-generator?utm_source=swifting.io) or [Generamba](https://github.com/rambler-ios/Generamba).
 
 ### Contacts App
 
@@ -506,6 +532,14 @@ Since the wireframe is responsible for creating a module, it is convenient to se
 
 The router layer brings a good opportunity to [avoid using storyboards segues](https://www.toptal.com/ios/ios-user-interfaces-storyboards-vs-nibs-vs-custom-code) and deal with view controller transitions on code. Since storyboards don't offer a decent solution for passing data between view controllers, this doesn't always mean more code. All we get is more reusability, better separation of concerns and maintanability of a project.
 
-### Conclusion
+## Conclusion
 
 You can find all projects (VIPER and MVVM - Starter and Final) in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
+
+As you can see, MVVM and VIPER might be different, but are not necessarily exclusive. MVVM only says that, besides View and Model, there should be a ViewModel layer. But it doesn't say how this ViewModel is created, nor how the data is retrieved. Most important of all, MVVM is a _design pattern_ and should be treated as one. It's open and can be implemented in many different ways.
+
+On the other hand, VIPER is a very specific software architecture. It contains layers carrying their own responsibilities and is less open to change. As we saw in this example, VIPER can also use view models, which are created by its presentation layer.
+
+When it comes to choose one or the other, there's no silver bullet - but certainly a few advices. If you are in a long-term project with well defined requirements, then VIPER might be a good option - especially if you intend to reuse components.
+
+But if you are in a shorter project, MVVM is a better fit. It produces much less code and can avoid a lot of overhead created by VIPER when changing things is needed - and still deliver high quality, testable and maintainable software.
