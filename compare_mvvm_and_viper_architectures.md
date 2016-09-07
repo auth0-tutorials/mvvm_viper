@@ -42,7 +42,7 @@ The app has two screens: the first is a list of contacts, displayed in table vie
 
 The second is an Add Contact screen, with first/last name text fields and cancel/done button items.
 
-<img src="img/add_contact.png" width="300">
+<img src="img/add-contact.png" width="300">
 
 ## MVVM
 
@@ -58,11 +58,11 @@ MVVM stands for **Model-View-ViewModel**. It's a different way to arrange respon
 
 Comparing to MVC, you change from a architecture that looks like this:
 
-// image
+<img src="img/mvc-pattern.png">
 
 For something that looks like this:
 
-<img src="img/mvvm_pattern.png" width="500">
+<img src="img/mvvm-pattern.png">
 
 In which the View layer corresponds to UIView and UIViewController classes and subclasses.
 
@@ -280,6 +280,7 @@ class ContactViewModelController {
 }
 
 ```
+> Note: MVVM is not clear about how ViewModels are created. For a more layered architecture, I prefer to create a ViewModelController, which is responsible for interacting with the Model layer and creating ViewModels.
 
 First thing to remember as a rule of thumb: the View Model layers is not responsible for user interface. A way to guarantee that you're not messing things up is to **never** import UIKit in a View Model file.
 
@@ -287,7 +288,7 @@ The _ContactViewModelController_ class retrieves contacts from the local storage
 
 In a real world scenario, this would involve performing a network request besides inserting in a local database. But none of them should be a View Model role anyway - networking and database should have their own managers.
 
-That's it for MVVM. You may find this approach more testable, mantainable and distributed than usual MVC. So let's talk about VIPER and check how the two architecture styles compare.
+That's it for MVVM. You may find this approach more testable, mantainable and distributed than usual MVC. So let's talk about VIPER and check how the two compare.
 
 ## VIPER
 
@@ -295,22 +296,22 @@ That's it for MVVM. You may find this approach more testable, mantainable and di
 
 VIPER is an application of the [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) to iOS projects. It stands for View, Interactor, Presenter, Entity, and Router. It's a really segmented way to divide responsibilities, fits very well with unit testing and makes your code more reusable. 
 
-// image
+<img src="img/viper-architecture.png">
 
 - **View** - It's the interface layer, which means UIKit files (including UIViewController). At this point, it's quite clear that UIViewController subclasses should belong to the View layer in a more decoupled architecture. In VIPER, things are basically the same of those in MVVM: views are responsible for displaying what the presenter asks them to, and to transmit user input back to the Presenter.
 
-- **Interactor** - Contains the business logic that are described by the use cases in the application. Similar to the ViewModel, the interactor is responsible for fetching data from the model layer (using network or local database), and its implementation is totally independent of the UI. It's important to remember that network and database managers are not part of VIPER, so they are treated as separated dependencies.
+- **Interactor** - Contains the business logic that are described by the use cases in the application. The interactor is responsible for fetching data from the model layer (using network or local database), and its implementation is totally independent of the UI. It's important to remember that network and database managers are not part of VIPER, so they are treated as separated dependencies.
 
-- **Presenter** - Contains view logic to format data to be displayed. In MVVM, this is part of the job done by the ViewModel. The Presenter receives data from the Interactor and carry it to the View. Also, it reacts to user inputs, asking for more data or sending it back to the Interactor.
+- **Presenter** - Contains view logic to format data to be displayed. In MVVM, this is part of the job done by the ViewModelController in our example. The Presenter receives data from the Interactor and carry it to the View. Also, it reacts to user inputs, asking for more data or sending it back to the Interactor.
 
 - **Entity** - Has part of the responsibilities of the Model layer in the other architectures. Entities are plain data objects, with no business logic, managed by the Interactor.
 
 - **Router** - The navigation logic of the application. It might not seem an important layer, but if you have to reuse the same iPhone views in a iPad, the only thing that might change is the way that the views are presented. This lets your other layers untouched, and the Router is responsible for the navigation flow in each situation.
 
-Comparing to MVX styles, Viper has a few key differences in the distribution of responsibilities:
-- It introduces Router, the layer responsible for the navigation flow.
+Comparing to MVVM, Viper has a few key differences in the distribution of responsibilities:
+- It introduces Router, the layer responsible for the navigation flow, removing it from the View.
 - Entities are plain data structures, transferring the access logic that usually belongs to Model to the Interactor.
-- ViewModel (and Controller in MVC) responsibilities are shared among Interactor and Presenter.
+- ViewModelController responsibilities are shared among Interactor and Presenter.
 
 Again, it's time to get the hands dirty and explore the VIPER architecture with an example app. For the sake of simplicity, we will explore only the Contact List module. The code for the Add Contact module can be found in the starter project (_VIPER Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/)).
 
@@ -536,10 +537,10 @@ The router layer brings a good opportunity to [avoid using storyboards segues](h
 
 You can find all projects (VIPER and MVVM - Starter and Final) in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
 
-As you can see, MVVM and VIPER might be different, but are not necessarily exclusive. MVVM only says that, besides View and Model, there should be a ViewModel layer. But it doesn't say how this ViewModel is created, nor how the data is retrieved. Most important of all, MVVM is a _design pattern_ and should be treated as one. It's open and can be implemented in many different ways.
+As you can see, MVVM and VIPER might be different, but are not necessarily exclusive. MVVM only says that, besides View and Model, there should be a ViewModel layer. But it doesn't say how this ViewModel is created, nor how the data is retrieved - not all responsibilities are clearly defined. It's open and can be implemented in many different ways.
 
 On the other hand, VIPER is a very specific software architecture. It contains layers carrying their own responsibilities and is less open to change. As we saw in this example, VIPER can also use view models, which are created by its presentation layer.
 
-When it comes to choose one or the other, there's no silver bullet - but certainly a few advices. If you are in a long-term project with well defined requirements, then VIPER might be a good option - especially if you intend to reuse components.
+When it comes to choose one or the other, there's no silver bullet - but certainly a few advices. If you are in a long-term project with well defined requirements and intend to reuse components, then VIPER is definitely a better option. Its clear separation of concerns improves testability and reusability.
 
-But if you are in a shorter project, MVVM is a better fit. It produces much less code and can avoid a lot of overhead created by VIPER when changing things is needed - and still deliver high quality, testable and maintainable software.
+But if you are prototyping or in a shorter project with no need to reuse components, MVVM is a better fit. With VIPER, you might need to create a lot of classes and protocols for small responsibilities (think of a "About Us" screen). MVVM generally produces much less code due to its _not-so-clear_ separation of concerns and can avoid a lot of overhead created by VIPER. Your code will definitely be easier to write, and still easy to test and maintain.
