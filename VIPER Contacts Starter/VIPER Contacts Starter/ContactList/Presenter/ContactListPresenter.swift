@@ -10,32 +10,21 @@ class ContactListPresenter: ContactListPresenterProtocol {
     var interactor: ContactListInteractorInputProtocol?
     var wireFrame: ContactListWireFrameProtocol?
 
-    func viewDidLoad() {
-        interactor?.retrieveContacts()
-    }
+    func viewDidLoad() {}
 
-    func addNewContact(from view: ContactListView) {
-        wireFrame?.presentAddContactScreen(from: view)
-    }
+    func addNewContact(from view: ContactListViewProtocol) {}
 
 }
 
 extension ContactListPresenter: ContactListInteractorOutputProtocol {
 
-    func didRetrieveContacts(contacts: [Contact]) {
-        view?.reloadInterface(with: contacts.map() {
-            return ContactViewModel(fullName: $0.fullName)
-        })
-    }
+    func didRetrieveContacts(contacts: [Contact]) {}
 
 }
 
 extension ContactListPresenter: AddModuleDelegate {
 
-    func didAddContact(contact: Contact) {
-        let contactViewModel = ContactViewModel(fullName: contact.fullName)
-        view?.didInsertContact(contactViewModel)
-    }
+    func didAddContact(contact: Contact) {}
 
     func didCancelAddContact() {}
 

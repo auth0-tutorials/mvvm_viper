@@ -28,7 +28,7 @@ protocol ContactListPresenterProtocol: class {
 
     // VIEW -> PRESENTER
     func viewDidLoad()
-    func addNewContact(from view: ContactListView)
+    func addNewContact(from view: ContactListViewProtocol)
 }
 
 protocol ContactListInteractorOutputProtocol: class {

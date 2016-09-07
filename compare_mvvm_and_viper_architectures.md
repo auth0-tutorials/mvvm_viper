@@ -489,12 +489,41 @@ As you may have noticed, presenters might get large. When this happens, it is in
 
 #### Entity
 
-This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the same code found [here](#model) in the **Contact.swift** file, and add the following View Model struct.
+This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the **Contact** class and its operator overloading functions. Put the following code in the **Contact.swift** file.
 
 ```swift
+import Foundation
+import CoreData
+
+public class Contact: NSManagedObject {
+
+    var fullName: String {
+        get {
+            var name = ""
+            if let firstName = firstName {
+                name += firstName
+            }
+            if let lastName = lastName {
+                name += " " + lastName
+            }
+            return name
+        }
+    }
+
+}
+
 public struct ContactViewModel {
     var fullName = ""
 }
+
+public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
+    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+}
+
+public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
+    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+}
+
 ```
 
 The view model contains the fields that the presenter formats and view needs to display. The _Contact_ class is a subclass of _NSManagedObject_, containing the entity fields exactly as it is in the Core Data model.
