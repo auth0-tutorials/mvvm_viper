@@ -26,9 +26,9 @@ tags:
 
 ---
 
-[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, meaning that your project will be structured in 3 parts: Model, representing the entities; View, representing the interface with which the user interacts; and Controller, responsible for connecting the other two pieces. That's how Apple recomends us to organize our iOS projects.
+[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, meaning that your project will be structured in 3 parts: Model, representing the entities; View, representing the interface with which the user interacts; and Controller, responsible for connecting the other two pieces. That's how Apple recommends us to organize our iOS projects.
 
-However, you problably know that projects can be highly complex: handling network requests, parsing responses, accessing data models, formatting data for the interface, responding to interface events, and so on. You'll end up with enormous Controllers, responsible for all these different things and not reusable at all. In other words, MVC can be a nightmare for developers in charge of the maintenance of a project. But how can we accomplish a better separation of concerns and reusability for iOS projects?
+However, you probably know that projects can be highly complex: handling network requests, parsing responses, accessing data models, formatting data for the interface, responding to interface events, and so on. You'll end up with enormous Controllers, responsible for all these different things and not reusable at all. In other words, MVC can be a nightmare for developers in charge of the maintenance of a project. But how can we accomplish a better separation of concerns and reusability for iOS projects?
 
 We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [Massive View Controller](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how these two different architectures are structured, build an example application and compare when it's the case to use one or the other.
 
@@ -311,7 +311,7 @@ The ContactViewModelController class retrieves contacts from the local storage a
 
 In a real world scenario, this would involve performing a network request besides inserting in a local database. But none of them should be a view model role anyway - networking and database should have their own managers.
 
-That's it for MVVM. You may find this approach more testable, mantainable and distributed than usual MVC. So let's talk about VIPER and check how the two compare.
+That's it for MVVM. You may find this approach more testable, maintainable and distributed than usual MVC. So let's talk about VIPER and check how the two compare.
 
 ## VIPER
 
@@ -325,7 +325,7 @@ VIPER is an application of the [Clean Architecture](https://8thlight.com/blog/un
 
 - **Interactor** - Contains the business logic that are described by the use cases in the application. The interactor is responsible for fetching data from the model layer (using network or local database), and its implementation is totally independent of the user interface. It's important to remember that network and database managers are not part of VIPER, so they are treated as separated dependencies.
 
-- **Presenter** - Contains view logic to format data to be displayed. In MVVM, this is part of the job done by the ViewModelController in our example. The presenter receives data from the interactor, creates a view model instance and carry it to the View. Also, it reacts to user inputs, asking for more data or sending it back to the Interactor.
+- **Presenter** - Contains view logic to format data to be displayed. In MVVM, this is part of the job done by the ViewModelController in our example. The presenter receives data from the interactor, creates a view model instance and carry it to the View. Also, it reacts to user inputs, asking for more data or sending it back to the interactor.
 
 - **Entity** - Has part of the responsibilities of the model layer in the other architectures. Entities are plain data objects, with no business logic, managed by the interactor and by the data managers.
 
@@ -334,7 +334,7 @@ VIPER is an application of the [Clean Architecture](https://8thlight.com/blog/un
 Comparing to MVVM, Viper has a few key differences in the distribution of responsibilities:
 - It introduces router, the layer responsible for the navigation flow, removing it from the View.
 - Entities are plain data structures, transferring the access logic that usually belongs to model to the interactor.
-- ViewModelController responsibilities are shared among Interactor and Presenter.
+- ViewModelController responsibilities are shared among interactor and presenter.
 
 Again, it's time to get the hands dirty and explore the VIPER architecture with an example app. For the sake of simplicity, we will explore only the Contact List module. The code for the Add Contact module can be found in the starter project (_VIPER Contacts Starter_ folder in [this repository](https://github.com/auth0-tutorials/mvvm_viper/)).
 
@@ -445,7 +445,7 @@ After retrieving data, the interactor notifies the presenter and sends what was 
 
 #### Presenter
 
-This is the central point in the VIPER architecture. The communication between view and the other layers (interactor and and router) passes through the presenter. Let's see how things work by placing the following code in the **ContactListPresenter.swift** file.
+This is the central point in the VIPER architecture. The communication between view and the other layers (interactor and router) passes through the presenter. Let's see how things work by placing the following code in the **ContactListPresenter.swift** file.
 
 ```swift
 import Foundation
@@ -492,7 +492,7 @@ When the view is loaded, it notifies the presenter, which asks the interactor fo
 
 Also, when the contacts list is retrieved, the presenter formats the data and sends it back to the view. It is also responsible for implementing the Add Contact module delegate. This means that the presenter will be notified when a new contact is added, format it and send it to the view.
 
-As you may have noticed, presenters might get large. When this happens, it is interesting to separate it in two pieces: the presenter, which will only receives data and format it back to the view; and event handler, which will respond to interface events.
+As you may have noticed, presenters might get large. When this happens, it is interesting to separate it in two pieces: the presenter, which will only receive data and format it back to the view; and event handler, which will respond to interface events.
 
 #### Entity
 
@@ -597,6 +597,6 @@ As you can see, MVVM and VIPER might be different, but are not necessarily exclu
 
 On the other hand, VIPER is a very specific software architecture. It contains layers with their own responsibilities and is less open to change. As we saw in this example, VIPER can also use view models, which are created by its presentation layer.
 
-When it comes to choose one or the other, there's no silver bullet - but certainly a few advices. If you are in a long-term project with well defined requirements and intend to reuse components, then VIPER is definitely a better option. Its clear separation of concerns improves testability and reusability.
+When it comes to choose one or the other, there's no silver bullet - but certainly a few advices. If you are in a long-term project with well-defined requirements and intend to reuse components, then VIPER is definitely a better option. The clearer separation of concerns improves testability and reusability.
 
-But if you are prototyping or in a shorter project with no need to reuse components, MVVM is a better fit. With VIPER, you might need to create a lot of classes and protocols for small responsibilities (think of a "About Us" screen). MVVM generally produces much less code due to its _not-so-clear_ separation of concerns and can avoid a lot of overhead created by VIPER. Your code will definitely be easier to write, and still easy to test and maintain.
+But if you are prototyping or in a shorter project with no need to reuse components, MVVM is a better fit. With VIPER, you might need to create a lot of classes and protocols for small responsibilities (think of a "About Us" screen). MVVM generally produces much less code due to its _not-so-clear_ separation of concerns and can avoid some overhead created by VIPER. Your code will definitely be easier to write, and still easy to test and maintain.
