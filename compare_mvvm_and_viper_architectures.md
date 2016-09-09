@@ -26,11 +26,11 @@ tags:
 
 ---
 
-[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, meaning that your project will be structured in 3 parts: Model, representing the entities; View, representing the interface with which the user interacts; and Controller, responsible for connecting the other two pieces. That's how Apple recommends us to organize our iOS projects.
+[MVC](https://en.wikipedia.org/wiki/Model–view–controller) is a well-known concept for those who have been developing software for a reasonable length of time. It's an acronym for **Model View Controller**, which is a pattern that divides a project in 3 parts: Model, representing the entities; View, representing the interface with which the user interacts; and Controller, responsible for connecting the other two pieces. That's how Apple recommends us to organize our iOS projects.
 
 However, you probably know that projects can be highly complex: handling network requests, parsing responses, accessing data models, formatting data for the interface, responding to interface events, and so on. You'll end up with enormous Controllers, responsible for all these different things and not reusable at all. In other words, MVC can be a nightmare for developers in charge of the maintenance of a project. But how can we accomplish a better separation of concerns and reusability for iOS projects?
 
-We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [Massive View Controller](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how these two different architectures are structured, build an example application and compare when it's the case to use one or the other.
+We'll explore two popular alternatives for MVC: MVVM and VIPER. Both are gaining popularity in the iOS community, and proved to be good ways to go instead of the traditional MVC (gently nicknamed as [Massive View Controller](https://twitter.com/Colin_Campbell/status/293167951132098560)). We'll talk about how the two are structured, build an example application and compare when it's the case to use one or the other.
 
 ## Example
 
@@ -95,7 +95,7 @@ public class Contact: NSManagedObject {
 }
 
 ```
-A Contact has only these two fields, _firstName_ and _lastName_. A stored property is responsible for returning the _fullName_, and the operators > and < have their implementation to be used when an instance is inserted in a ordered list.
+A Contact has only these two fields, _firstName_ and _lastName_. A computed property is responsible for returning the _fullName_, and the operators > and < have their implementation to be used when an instance is inserted in an ordered list.
 
 #### View
 
