@@ -589,6 +589,31 @@ Since the wireframe is responsible for creating a module, it is convenient to se
 
 The router layer brings a good opportunity to [avoid using storyboards segues](https://www.toptal.com/ios/ios-user-interfaces-storyboards-vs-nibs-vs-custom-code) and deal with view controller transitions on code. Since storyboards don't offer a decent solution for passing data between view controllers, this doesn't always mean more code. All we get is more reusability.
 
+## Aside: Using Lock for iOS
+
+Auth0 is an authentication broker that supports social identity providers (Facebook, Twitter, Github, etc) as well as enterprise identity providers (Active Directory, LDAP, Google Apps and Salesforce). In other words, you can include single sign on, quick authentication and simple user management using only a few lines of code.
+
+It's quite easy to integrate Auth0 Lock to an iOS project, as we will see in the next few steps:
+
+### Step 0
+If you don't already have any Auth0 account, [sign up](https://auth0.com/signup) for one now to follow along with the other steps. Also, create a new client in the dashboard - it's pretty easy and straightforward.
+
+### Step 1
+Lock is available on [CocoaPods](https://cocoapods.org/). [Create a new project with CocoaPods](https://guides.cocoapods.org/) or use an existing one. Then add the following line to your Podfile:
+
+```ruby
+pod 'Lock', '~> 1.27'
+```
+
+### Step 3
+Create a new file named Auth0.plist. In both Auth0.plist and Info.plist files, add the following two string entries:
+
+* **Auth0ClientId**: The client ID of your Auth0 application.
+* **Auth0Domain**: Your Auth0 account domain.
+
+These values can be found in the [client dashboard](https://app.auth0.com/#/applications). 
+
+
 ## Conclusion
 
 You can find all projects (VIPER and MVVM - Starter and Final) in [this repository](https://github.com/auth0-tutorials/mvvm_viper/).
