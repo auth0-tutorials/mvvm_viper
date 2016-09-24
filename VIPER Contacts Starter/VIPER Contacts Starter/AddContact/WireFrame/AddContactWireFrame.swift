@@ -10,10 +10,10 @@ class AddContactWireFrame: AddContactWireFrameProtocol {
 
     class func createAddContactModule(with delegate: AddModuleDelegate) -> UIViewController {
 
-        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("AddContactsNavigationController")
+        let navController = mainStoryboard.instantiateViewController(withIdentifier: "AddContactsNavigationController")
         if let view = navController.childViewControllers.first as? AddContactViewProtocol {
             // Generating module components
-            let presenter: protocol<AddContactPresenterProtocol, AddContactInteractorOutputProtocol> = AddContactPresenter()
+            let presenter: AddContactPresenterProtocol & AddContactInteractorOutputProtocol = AddContactPresenter()
             let interactor: AddContactInteractorInputProtocol = AddContactInteractor()
             let localDataManager: AddContactLocalDataManagerInputProtocol = AddContactLocalDataManager()
             let wireFrame: AddContactWireFrameProtocol = AddContactWireFrame()
@@ -33,12 +33,12 @@ class AddContactWireFrame: AddContactWireFrameProtocol {
     }
 
     static var mainStoryboard: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
 
     func dismissAddContactInterface(from view: AddContactViewProtocol, completion: (() -> Void)?) {
         if let view = view as? UIViewController {
-            view.dismissViewControllerAnimated(true, completion: completion)
+            view.dismiss(animated: true, completion: completion)
         }
     }
 

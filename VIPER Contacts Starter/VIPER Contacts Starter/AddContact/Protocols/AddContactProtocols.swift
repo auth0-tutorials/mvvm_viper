@@ -8,7 +8,7 @@ import UIKit
 import CoreData
 
 protocol AddModuleDelegate: class {
-    func didAddContact(contact: Contact)
+    func didAddContact(_ contact: Contact)
     func didCancelAddContact()
 }
 
@@ -35,7 +35,7 @@ protocol AddContactPresenterProtocol: class {
 
     // VIEW -> PRESENTER
     func cancelAddContactAction()
-    func addNewContact(firstName firstName: String, lastName: String)
+    func addNewContact(firstName: String, lastName: String)
 }
 
 protocol AddContactInteractorOutputProtocol: class {
@@ -50,7 +50,7 @@ protocol AddContactInteractorInputProtocol: class {
     var localDatamanager: AddContactLocalDataManagerInputProtocol? { get set }
 
     // PRESENTER -> INTERACTOR
-    func saveNewContact(firstName firstName: String, lastName: String) -> Contact?
+    func saveNewContact(firstName: String, lastName: String) -> Contact?
 }
 
 protocol AddContactDataManagerInputProtocol: class {
@@ -69,5 +69,5 @@ protocol AddContactLocalDataManagerInputProtocol: class {
     /**
     * Add here your methods for communication INTERACTOR -> LOCALDATAMANAGER
     */
-    func createContact(firstName firstName: String, lastName: String) throws -> Contact
+    func createContact(firstName: String, lastName: String) throws -> Contact
 }

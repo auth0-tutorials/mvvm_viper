@@ -17,7 +17,7 @@ class AddContactView: UIViewController, AddContactViewProtocol {
         firstNameTextField.becomeFirstResponder()
     }
 
-    @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnDoneButton(_ sender: UIBarButtonItem) {
         guard
             let firstName = firstNameTextField.text,
             let lastName = lastNameTextField.text
@@ -32,15 +32,15 @@ class AddContactView: UIViewController, AddContactViewProtocol {
         presenter?.addNewContact(firstName: firstName, lastName: lastName)
     }
 
-    @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnCancelButton(_ sender: UIBarButtonItem) {
         presenter?.cancelAddContactAction()
     }
 
-    private func showEmptyNameAlert() {
+    fileprivate func showEmptyNameAlert() {
         let alertView = UIAlertController(title: "Error",
                                           message: "A contact must have first and last names",
-                                          preferredStyle: .Alert)
-        alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
-        presentViewController(alertView, animated: true, completion: nil)
+                                          preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: nil))
+        present(alertView, animated: true, completion: nil)
     }
 }

@@ -13,13 +13,13 @@ class ContactListPresenter: ContactListPresenterProtocol {
 
 extension ContactListPresenter: ContactListInteractorOutputProtocol {
 
-    func didRetrieveContacts(contacts: [Contact]) {}
+    func didRetrieveContacts(_ contacts: [Contact]) {}
 
 }
 
 extension ContactListPresenter: AddModuleDelegate {
 
-    func didAddContact(contact: Contact) {}
+    func didAddContact(_ contact: Contact) {}
 
     func didCancelAddContact() {}
 

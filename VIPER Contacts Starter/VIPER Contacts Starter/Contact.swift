@@ -1,6 +1,6 @@
 import Foundation
 import CoreData
 
-public class Contact: NSManagedObject {}
+open class Contact: NSManagedObject {}
 
 public struct ContactViewModel {}

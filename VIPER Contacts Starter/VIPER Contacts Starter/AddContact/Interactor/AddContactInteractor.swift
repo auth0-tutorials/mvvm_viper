@@ -10,7 +10,7 @@ class AddContactInteractor: AddContactInteractorInputProtocol {
     var APIDataManager: AddContactAPIDataManagerInputProtocol?
     var localDatamanager: AddContactLocalDataManagerInputProtocol?
 
-    func saveNewContact(firstName firstName: String, lastName: String) -> Contact? {
+    func saveNewContact(firstName: String, lastName: String) -> Contact? {
         do {
             let contact = try localDatamanager?.createContact(firstName: firstName, lastName: lastName)
             return contact
