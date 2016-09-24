@@ -609,21 +609,9 @@ These values can be found in the [client dashboard](https://app.auth0.com/#/appl
 Set up your AppDelegate class with the following code:
 
 ```swift
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    A0Lock.sharedLock().applicationLaunchedWithOptions(launchOptions)
+private func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	 A0Lock.shared().applicationLaunched(options: launchOptions)
     return true
-}
-```
-
-```swift
-func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-    return A0Lock.sharedLock().handleURL(url, sourceApplication: sourceApplication)
-}
-```
-
-```swift
-func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
-    return A0Lock.sharedLock().continueUserActivity(userActivity, restorationHandler:restorationHandler)
 }
 ```
 
@@ -633,17 +621,18 @@ func application(application: UIApplication, continueUserActivity userActivity: 
 First instantiate A0LockViewController and register the authentication callback that will receive the authenticated user's credentials. Finally present it as a modal view controller:
 
 ```swift
-let lock = A0Lock.sharedLock()
-let controller = lock.newLockViewController()
-controller.closable = true
-
-controller.onAuthenticationBlock = {(profile, token) in
-    // Do something with token & profile. e.g.: save them.
-    // Lock will not save the Token and the profile for you.
-    // And dismiss the UIViewController.
-    self.dismissViewControllerAnimated(true, completion: nil)
+let lock = A0Lock.shared()
+if let controller = lock.newLockViewController() {
+	controller.closable = true
+            
+	controller.onAuthenticationBlock = {(profile, token) in
+		// Do something with token & profile. e.g.: save them.
+		// Lock will not save the Token and the profile for you.
+		// And dismiss the UIViewController.
+		self.dismiss(animated: true, completion: nil)
+	}
+	lock.present(controller, from: self)
 }
-lock.presentLockController(controller, fromController: self)
 ```
 
 Then you'll see a beautiful and customizable login screen:
