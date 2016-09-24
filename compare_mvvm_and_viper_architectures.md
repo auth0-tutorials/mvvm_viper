@@ -78,7 +78,7 @@ The following code is a class to represent the contact and two operator overload
 import Foundation
 import CoreData
 
-public class Contact: NSManagedObject {
+open class Contact: NSManagedObject {
 
     var fullName: String {
         get {
@@ -102,9 +102,6 @@ A Contact has only these two fields, _firstName_ and _lastName_. A computed prop
 There are three files responsible for the view layer: the Main storyboard, with views already laid out in the starter project; the ContactsViewController, that displays the contacts list in a table view; and the AddContactViewController, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for ContactsViewController. Replace the **ContactsViewController.swift** file with the following code.
 
 ```swift
-import UIKit
-import Foundation
-
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
@@ -118,15 +115,15 @@ class ContactsViewController: UIViewController {
         }, failure: nil)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let addContactNavigationController = segue.destinationViewController as? UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let addContactNavigationController = segue.destination as? UINavigationController
         let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
 
         addContactVC?.contactsViewModelController = contactViewModelController
         addContactVC?.didAddContact = { [unowned self] (contactViewModel, index) in
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            let indexPath = IndexPath(row: index, section: 0)
             self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            self.tableView.insertRows(at: [indexPath], with: .left)
             self.tableView.endUpdates()
         }
     }
@@ -135,17 +132,17 @@ class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") as? ContactsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell") as? ContactsTableViewCell
         guard let contactsCell = cell else {
             return UITableViewCell()
         }
 
-        contactsCell.cellModel = contactViewModelController.viewModel(at: indexPath.row)
+        contactsCell.cellModel = contactViewModelController.viewModel(at: (indexPath as NSIndexPath).row)
         return contactsCell
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contactViewModelController.contactsCount
     }
 
@@ -197,7 +194,7 @@ class AddContactViewController: UIViewController {
         firstNameTextField.becomeFirstResponder()
     }
 
-    @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnDoneButton(_ sender: UIBarButtonItem) {
         guard let firstName = firstNameTextField.text,
             let lastName = lastNameTextField.text
             else {
@@ -209,27 +206,27 @@ class AddContactViewController: UIViewController {
             return
         }
 
-        dismissViewControllerAnimated(true) { [unowned self] in
+        dismiss(animated: true) { [unowned self] in
             self.contactsViewModelController?.createContact(firstName: firstName, lastName: lastName,
                                                             success: self.didAddContact, failure: nil)
         }
 
     }
 
-    @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func didClickOnCancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 
-    private func showEmptyNameAlert() {
+    fileprivate func showEmptyNameAlert() {
         showMessage(title: "Error", message: "A contact must have first and last names")
     }
 
-    private func showMessage(title title: String, message: String) {
+    fileprivate func showMessage(title: String, message: String) {
         let alertView = UIAlertController(title: title,
                                           message: message,
-                                          preferredStyle: .Alert)
-        alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
-        presentViewController(alertView, animated: true, completion: nil)
+                                          preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: nil))
+        present(alertView, animated: true, completion: nil)
     }
 
 }
@@ -249,11 +246,11 @@ public struct ContactViewModel {
 }
 
 public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() < rhs.fullName.lowercased()
 }
 
 public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() > rhs.fullName.lowercased()
 }
 
 ```
@@ -265,14 +262,14 @@ import Foundation
 
 class ContactViewModelController {
 
-    private var contactViewModelList: [ContactViewModel] = []
-    private var dataManager = ContactLocalDataManager()
+    fileprivate var contactViewModelList: [ContactViewModel] = []
+    fileprivate var dataManager = ContactLocalDataManager()
 
     var contactsCount: Int {
         return contactViewModelList.count
     }
 
-    func retrieveContacts(success: (() -> Void)?, failure: (() -> Void)?) {
+    func retrieveContacts(_ success: (() -> Void)?, failure: (() -> Void)?) {
         do {
             let contacts = try dataManager.retrieveContactList()
             contactViewModelList = contacts.map() { ContactViewModel(fullName: $0.fullName) }
@@ -286,14 +283,14 @@ class ContactViewModelController {
         return contactViewModelList[index]
     }
 
-    func createContact(firstName firstName: String, lastName: String,
+    func createContact(firstName: String, lastName: String,
                                  success: ((ContactViewModel, Int) -> Void)?,
                                  failure: (() -> Void)?) {
         do {
             let contact = try dataManager.createContact(firstName: firstName, lastName: lastName)
             let contactViewModel = ContactViewModel(fullName: contact.fullName)
             let insertionIndex = contactViewModelList.insertionIndex(of: contactViewModel) { $0 < $1 }
-            contactViewModelList.insert(contactViewModel, atIndex: insertionIndex)
+            contactViewModelList.insert(contactViewModel, at: insertionIndex)
             success?(contactViewModel, insertionIndex)
         } catch {
             failure?()
