@@ -14,7 +14,7 @@ class ContactListView: UIViewController {
         tableView.tableFooterView = UIView()
     }
 
-    @IBAction func didClickOnAddButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnAddButton(_ sender: UIBarButtonItem) {
         presenter?.addNewContact(from: self)
     }
 
@@ -27,13 +27,13 @@ extension ContactListView: ContactListViewProtocol {
         tableView.reloadData()
     }
 
-    func didInsertContact(contact: ContactViewModel) {
+    func didInsertContact(_ contact: ContactViewModel) {
         let insertionIndex = contactList.insertionIndex(of: contact) { $0 < $1 }
-        contactList.insert(contact, atIndex: insertionIndex)
+        contactList.insert(contact, at: insertionIndex)
 
-        let indexPath = NSIndexPath(forRow: insertionIndex, inSection: 0)
+        let indexPath = IndexPath(row: insertionIndex, section: 0)
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        tableView.insertRows(at: [indexPath], with: .right)
         tableView.endUpdates()
     }
 
@@ -41,15 +41,15 @@ extension ContactListView: ContactListViewProtocol {
 
 extension ContactListView: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") else {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell") else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = contactList[indexPath.row].fullName
+        cell.textLabel?.text = contactList[(indexPath as NSIndexPath).row].fullName
         return cell
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contactList.count
     }
 

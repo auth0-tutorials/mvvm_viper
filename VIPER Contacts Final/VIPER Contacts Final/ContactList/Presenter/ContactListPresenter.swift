@@ -17,7 +17,7 @@ class ContactListPresenter: ContactListPresenterProtocol {
 
 extension ContactListPresenter: ContactListInteractorOutputProtocol {
 
-    func didRetrieveContacts(contacts: [Contact]) {
+    func didRetrieveContacts(_ contacts: [Contact]) {
         view?.reloadInterface(with: contacts.map() {
             return ContactViewModel(fullName: $0.fullName)
         })
@@ -27,7 +27,7 @@ extension ContactListPresenter: ContactListInteractorOutputProtocol {
 
 extension ContactListPresenter: AddModuleDelegate {
 
-    func didAddContact(contact: Contact) {
+    func didAddContact(_ contact: Contact) {
         let contactViewModel = ContactViewModel(fullName: contact.fullName)
         view?.didInsertContact(contactViewModel)
     }

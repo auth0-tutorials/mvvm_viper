@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-public class Contact: NSManagedObject {
+open class Contact: NSManagedObject {
 
     var fullName: String {
         get {
@@ -23,9 +23,9 @@ public struct ContactViewModel {
 }
 
 public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() < rhs.fullName.lowercased()
 }
 
 public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() > rhs.fullName.lowercased()
 }

@@ -14,9 +14,9 @@ class AddContactPresenter: AddContactPresenterProtocol, AddContactInteractorOutp
         }
     }
 
-    func addNewContact(firstName firstName: String, lastName: String) {
+    func addNewContact(firstName: String, lastName: String) {
         let contact = interactor?.saveNewContact(firstName: firstName, lastName: lastName)
-        if let view = view, contact = contact {
+        if let view = view, let contact = contact {
             wireFrame?.dismissAddContactInterface(from: view) { [weak delegate] in
                 delegate?.didAddContact(contact)
             }

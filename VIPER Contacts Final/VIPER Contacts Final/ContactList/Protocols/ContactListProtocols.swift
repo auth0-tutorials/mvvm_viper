@@ -5,7 +5,7 @@ protocol ContactListViewProtocol: class {
     var presenter: ContactListPresenterProtocol? { get set }
 
     // PRESENTER -> VIEW
-    func didInsertContact(contact: ContactViewModel)
+    func didInsertContact(_ contact: ContactViewModel)
     func reloadInterface(with contacts: [ContactViewModel])
 }
 
@@ -29,7 +29,7 @@ protocol ContactListPresenterProtocol: class {
 protocol ContactListInteractorOutputProtocol: class {
     // INTERACTOR -> PRESENTER
 
-    func didRetrieveContacts(contacts: [Contact])
+    func didRetrieveContacts(_ contacts: [Contact])
 }
 
 protocol ContactListInteractorInputProtocol: class {

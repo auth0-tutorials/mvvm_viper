@@ -4,9 +4,9 @@ import UIKit
 class ContactListWireFrame: ContactListWireFrameProtocol {
 
     class func createContactListModule() -> UIViewController {
-        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("ContactsNavigationController")
+        let navController = mainStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationController")
         if let view = navController.childViewControllers.first as? ContactListView {
-            let presenter: protocol<ContactListPresenterProtocol, ContactListInteractorOutputProtocol> = ContactListPresenter()
+            let presenter: ContactListPresenterProtocol & ContactListInteractorOutputProtocol = ContactListPresenter()
             let interactor: ContactListInteractorInputProtocol = ContactListInteractor()
             let localDataManager: ContactListLocalDataManagerInputProtocol = ContactListLocalDataManager()
             let wireFrame: ContactListWireFrameProtocol = ContactListWireFrame()
@@ -24,7 +24,7 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
     }
 
     static var mainStoryboard: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
 
     func presentAddContactScreen(from view: ContactListViewProtocol) {
@@ -35,7 +35,7 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
 
         let addContactsView = AddContactWireFrame.createAddContactModule(with: delegate)
         if let sourceView = view as? UIViewController {
-            sourceView.presentViewController(addContactsView, animated: true, completion: nil)
+            sourceView.present(addContactsView, animated: true, completion: nil)
         }
     }
 
