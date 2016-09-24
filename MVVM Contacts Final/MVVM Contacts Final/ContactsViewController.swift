@@ -22,15 +22,15 @@ class ContactsViewController: UIViewController {
         }, failure: nil)
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let addContactNavigationController = segue.destinationViewController as? UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let addContactNavigationController = segue.destination as? UINavigationController
         let addContactVC = addContactNavigationController?.viewControllers[0] as? AddContactViewController
 
         addContactVC?.contactsViewModelController = contactViewModelController
         addContactVC?.didAddContact = { [unowned self] (contactViewModel, index) in
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            let indexPath = IndexPath(row: index, section: 0)
             self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            self.tableView.insertRows(at: [indexPath], with: .left)
             self.tableView.endUpdates()
         }
     }
@@ -39,17 +39,17 @@ class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") as? ContactsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell") as? ContactsTableViewCell
         guard let contactsCell = cell else {
             return UITableViewCell()
         }
 
-        contactsCell.cellModel = contactViewModelController.viewModel(at: indexPath.row)
+        contactsCell.cellModel = contactViewModelController.viewModel(at: (indexPath as NSIndexPath).row)
         return contactsCell
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contactViewModelController.contactsCount
     }
 

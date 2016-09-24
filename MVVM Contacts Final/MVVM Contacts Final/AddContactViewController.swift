@@ -21,7 +21,7 @@ class AddContactViewController: UIViewController {
         firstNameTextField.becomeFirstResponder()
     }
 
-    @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnDoneButton(_ sender: UIBarButtonItem) {
         guard let firstName = firstNameTextField.text,
             let lastName = lastNameTextField.text
             else {
@@ -33,27 +33,27 @@ class AddContactViewController: UIViewController {
             return
         }
 
-        dismissViewControllerAnimated(true) { [unowned self] in
+        dismiss(animated: true) { [unowned self] in
             self.contactsViewModelController?.createContact(firstName: firstName, lastName: lastName,
                                                             success: self.didAddContact, failure: nil)
         }
 
     }
 
-    @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func didClickOnCancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 
-    private func showEmptyNameAlert() {
+    fileprivate func showEmptyNameAlert() {
         showMessage(title: "Error", message: "A contact must have first and last names")
     }
 
-    private func showMessage(title title: String, message: String) {
+    fileprivate func showMessage(title: String, message: String) {
         let alertView = UIAlertController(title: title,
                                           message: message,
-                                          preferredStyle: .Alert)
-        alertView.addAction(UIAlertAction(title: "Ok", style: .Destructive, handler: nil))
-        presentViewController(alertView, animated: true, completion: nil)
+                                          preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: nil))
+        present(alertView, animated: true, completion: nil)
     }
 
 }

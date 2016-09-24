@@ -10,14 +10,14 @@ import Foundation
 
 class ContactViewModelController {
 
-    private var contactViewModelList: [ContactViewModel] = []
-    private var dataManager = ContactLocalDataManager()
+    fileprivate var contactViewModelList: [ContactViewModel] = []
+    fileprivate var dataManager = ContactLocalDataManager()
 
     var contactsCount: Int {
         return contactViewModelList.count
     }
 
-    func retrieveContacts(success: (() -> Void)?, failure: (() -> Void)?) {
+    func retrieveContacts(_ success: (() -> Void)?, failure: (() -> Void)?) {
         do {
             let contacts = try dataManager.retrieveContactList()
             contactViewModelList = contacts.map() { ContactViewModel(fullName: $0.fullName) }
@@ -31,14 +31,14 @@ class ContactViewModelController {
         return contactViewModelList[index]
     }
 
-    func createContact(firstName firstName: String, lastName: String,
+    func createContact(firstName: String, lastName: String,
                                  success: ((ContactViewModel, Int) -> Void)?,
                                  failure: (() -> Void)?) {
         do {
             let contact = try dataManager.createContact(firstName: firstName, lastName: lastName)
             let contactViewModel = ContactViewModel(fullName: contact.fullName)
             let insertionIndex = contactViewModelList.insertionIndex(of: contactViewModel) { $0 < $1 }
-            contactViewModelList.insert(contactViewModel, atIndex: insertionIndex)
+            contactViewModelList.insert(contactViewModel, at: insertionIndex)
             success?(contactViewModel, insertionIndex)
         } catch {
             failure?()

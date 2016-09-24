@@ -6,45 +6,42 @@
 import Foundation
 import CoreData
 
-enum PersistenceError: ErrorType {
-    case ManagedObjectContextNotFound
-    case CouldNotCreateObject
-    case ObjectNotFound
+enum PersistenceError: Error {
+    case managedObjectContextNotFound
+    case couldNotCreateObject
+    case objectNotFound
 }
 
 class ContactLocalDataManager {
 
-    func createContact(firstName firstName: String, lastName: String) throws -> Contact {
+    func createContact(firstName: String, lastName: String) throws -> Contact {
         guard let managedOC = CoreDataStore.managedObjectContext else {
-            throw PersistenceError.ManagedObjectContextNotFound
+            throw PersistenceError.managedObjectContextNotFound
         }
 
-        if let newContact = NSEntityDescription.entityForName(String(Contact),
-                                                              inManagedObjectContext: managedOC) {
-            let contact = Contact(entity: newContact, insertIntoManagedObjectContext: managedOC)
+        if let newContact = NSEntityDescription.entity(forEntityName: String(describing: Contact.self),
+                                                              in: managedOC) {
+            let contact = Contact(entity: newContact, insertInto: managedOC)
             contact.firstName = firstName
             contact.lastName = lastName
             try managedOC.save()
             return contact
         }
-        throw PersistenceError.CouldNotCreateObject
+        throw PersistenceError.couldNotCreateObject
     }
 
     func retrieveContactList() throws -> [Contact] {
         guard let managedOC = CoreDataStore.managedObjectContext else {
-            throw PersistenceError.ManagedObjectContextNotFound
+            throw PersistenceError.managedObjectContextNotFound
         }
 
-        let request = NSFetchRequest(entityName: String(Contact))
+        let request: NSFetchRequest<Contact> = NSFetchRequest(entityName: String(describing: Contact.self))
         let caseInsensitiveSelector = #selector(NSString.caseInsensitiveCompare(_:))
         let sortDescriptorFirstName = NSSortDescriptor(key: "firstName", ascending: true, selector: caseInsensitiveSelector)
         let sortDescriptorLastName = NSSortDescriptor(key: "lastName", ascending: true, selector: caseInsensitiveSelector)
         request.sortDescriptors = [sortDescriptorFirstName, sortDescriptorLastName]
 
-        if let contactList = try managedOC.executeFetchRequest(request) as? [Contact] {
-            return contactList
-        }
-        throw PersistenceError.ObjectNotFound
+        return try managedOC.fetch(request)
     }
 
 }
