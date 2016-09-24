@@ -1,12 +1,3 @@
-//
-//  Array+Insertion.swift
-//  MVVM Contacts Final
-//
-//  Created by Rafael Sacchi on 8/14/16.
-//  Copyright © 2016 Rafael Sacchi. All rights reserved.
-//
-
-import Foundation
 
 extension Array {
     func insertionIndex(of elem: Element, isOrderedBefore: (Element, Element) -> Bool) -> Int {
