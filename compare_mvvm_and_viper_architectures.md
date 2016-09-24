@@ -360,7 +360,7 @@ class ContactListView: UIViewController {
         tableView.tableFooterView = UIView()
     }
 
-    @IBAction func didClickOnAddButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnAddButton(_ sender: UIBarButtonItem) {
         presenter?.addNewContact(from: self)
     }
 
@@ -373,13 +373,13 @@ extension ContactListView: ContactListViewProtocol {
         tableView.reloadData()
     }
 
-    func didInsertContact(contact: ContactViewModel) {
+    func didInsertContact(_ contact: ContactViewModel) {
         let insertionIndex = contactList.insertionIndex(of: contact) { $0 < $1 }
-        contactList.insert(contact, atIndex: insertionIndex)
+        contactList.insert(contact, at: insertionIndex)
 
-        let indexPath = NSIndexPath(forRow: insertionIndex, inSection: 0)
+        let indexPath = IndexPath(row: insertionIndex, section: 0)
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        tableView.insertRows(at: [indexPath], with: .right)
         tableView.endUpdates()
     }
 
@@ -387,15 +387,15 @@ extension ContactListView: ContactListViewProtocol {
 
 extension ContactListView: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell") else {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell") else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = contactList[indexPath.row].fullName
+        cell.textLabel?.text = contactList[(indexPath as NSIndexPath).row].fullName
         return cell
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contactList.count
     }
 
@@ -451,36 +451,36 @@ class ContactListPresenter: ContactListPresenterProtocol {
     weak var view: ContactListViewProtocol?
     var interactor: ContactListInteractorInputProtocol?
     var wireFrame: ContactListWireFrameProtocol?
-    
+
     func viewDidLoad() {
         interactor?.retrieveContacts()
     }
-    
+
     func addNewContact(from view: ContactListViewProtocol) {
         wireFrame?.presentAddContactScreen(from: view)
     }
-    
+
 }
 
 extension ContactListPresenter: ContactListInteractorOutputProtocol {
-    
-    func didRetrieveContacts(contacts: [Contact]) {
+
+    func didRetrieveContacts(_ contacts: [Contact]) {
         view?.reloadInterface(with: contacts.map() {
             return ContactViewModel(fullName: $0.fullName)
-            })
+        })
     }
-    
+
 }
 
 extension ContactListPresenter: AddModuleDelegate {
-    
-    func didAddContact(contact: Contact) {
+
+    func didAddContact(_ contact: Contact) {
         let contactViewModel = ContactViewModel(fullName: contact.fullName)
         view?.didInsertContact(contactViewModel)
     }
-    
+
     func didCancelAddContact() {}
-    
+
 }
 
 ```
@@ -499,7 +499,7 @@ This layer is similar to the Model layer in MVVM. In our contacts app, it is rep
 import Foundation
 import CoreData
 
-public class Contact: NSManagedObject {
+open class Contact: NSManagedObject {
 
     var fullName: String {
         get {
@@ -521,11 +521,11 @@ public struct ContactViewModel {
 }
 
 public func <(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString < rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() < rhs.fullName.lowercased()
 }
 
 public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
-    return lhs.fullName.lowercaseString > rhs.fullName.lowercaseString
+    return lhs.fullName.lowercased() > rhs.fullName.lowercased()
 }
 
 ```
@@ -543,9 +543,9 @@ import UIKit
 class ContactListWireFrame: ContactListWireFrameProtocol {
 
     class func createContactListModule() -> UIViewController {
-        let navController = mainStoryboard.instantiateViewControllerWithIdentifier("ContactsNavigationController")
+        let navController = mainStoryboard.instantiateViewController(withIdentifier: "ContactsNavigationController")
         if let view = navController.childViewControllers.first as? ContactListView {
-            let presenter: protocol<ContactListPresenterProtocol, ContactListInteractorOutputProtocol> = ContactListPresenter()
+            let presenter: ContactListPresenterProtocol & ContactListInteractorOutputProtocol = ContactListPresenter()
             let interactor: ContactListInteractorInputProtocol = ContactListInteractor()
             let localDataManager: ContactListLocalDataManagerInputProtocol = ContactListLocalDataManager()
             let wireFrame: ContactListWireFrameProtocol = ContactListWireFrame()
@@ -563,7 +563,7 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
     }
 
     static var mainStoryboard: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
 
     func presentAddContactScreen(from view: ContactListViewProtocol) {
@@ -574,7 +574,7 @@ class ContactListWireFrame: ContactListWireFrameProtocol {
 
         let addContactsView = AddContactWireFrame.createAddContactModule(with: delegate)
         if let sourceView = view as? UIViewController {
-            sourceView.presentViewController(addContactsView, animated: true, completion: nil)
+            sourceView.present(addContactsView, animated: true, completion: nil)
         }
     }
 
