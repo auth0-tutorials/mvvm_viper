@@ -75,7 +75,6 @@ Now it's time to get hands dirty to grasp the new concepts. So let's build an ex
 The following code is a class to represent the contact and two operator overloading functions. Replace the content in **Contact.swift** file with the following code.
 
 ```swift
-import Foundation
 import CoreData
 
 open class Contact: NSManagedObject {
@@ -161,7 +160,6 @@ Same thing happens with the closure that is called when a contact is created. It
 Now it's necessary to guarantee the data binding between the UITableViewCell subclass and the ViewModel. Replace the **ContactsTableViewCell.swift** file with the following code.
 
 ```swift
-import Foundation
 import UIKit
 
 class ContactsTableViewCell: UITableViewCell {
@@ -181,7 +179,7 @@ class ContactsTableViewCell: UITableViewCell {
 Now replace your **AddContactViewController.swift** file with the following code:
 
 ```swift
-import Foundation
+
 import UIKit
 
 class AddContactViewController: UIViewController {
@@ -241,7 +239,6 @@ Again, mostly UI operations. Note that it delegates to the ViewModelController t
 Time to talk about what's new: the View Model layer. First, insert the following code in the **ContactViewModel.swift** file.
 
 ```swift
-import Foundation
 
 public struct ContactViewModel {
     var fullName: String
@@ -260,7 +257,6 @@ public func >(lhs: ContactViewModel, rhs: ContactViewModel) -> Bool {
 And the following code in the **ContactViewModelController** file.
 
 ```swift
-import Foundation
 
 class ContactViewModelController {
 
@@ -346,7 +342,6 @@ Again, it's time to get the hands dirty and explore the VIPER architecture with 
 The view is represented by the elements in the Main.storyboard file and the ContactListView class. It is passive; only passes interface events along to the presenter, and updates itself when notified by the presenter. Replace the content in **ContactListView.swift** with the following code.
 
 ```swift
-import Foundation
 import UIKit
 
 class ContactListView: UIViewController {
@@ -416,7 +411,6 @@ Finally, there are the implementations of the UITableViewDataSource methods, upd
 The interactor in our example is quite simple. It only asks the local data manager for data - it does not care if the local manager is using Core Data, [Realm](https://realm.io) or any other data storage solution. The following code is part of the **ContactListInteractor.swift** file:
 
 ```swift
-import Foundation
 
 class ContactListInteractor: ContactListInteractorInputProtocol {
     weak var presenter: ContactListInteractorOutputProtocol?
@@ -447,7 +441,6 @@ After retrieving data, the interactor notifies the presenter and sends what was 
 This is the central point in the VIPER architecture. The communication between view and the other layers (interactor and router) passes through the presenter. Let's see how things work by placing the following code in the **ContactListPresenter.swift** file.
 
 ```swift
-import Foundation
 
 class ContactListPresenter: ContactListPresenterProtocol {
     weak var view: ContactListViewProtocol?
@@ -498,7 +491,6 @@ As you may have noticed, presenters might get large. When this happens, it is in
 This layer is similar to the Model layer in MVVM. In our contacts app, it is represented by the Contact class and its operator overloading functions. Replace the **Contact.swift** file with the following code.
 
 ```swift
-import Foundation
 import CoreData
 
 open class Contact: NSManagedObject {
@@ -539,7 +531,6 @@ The view model contains the fields that the presenter formats and view needs to 
 Last but not least, there is the router layer. The responsibility of navigating between modules is shared between the presenter and the wireframe. The presenter receives the user input and knows when to navigate, and the wireframe knows how to navigate. Replace the **ContactListWireFrame.swift** file with the following code.
 
 ```swift
-import Foundation
 import UIKit
 
 class ContactListWireFrame: ContactListWireFrameProtocol {
