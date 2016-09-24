@@ -6,11 +6,11 @@ class AddContactViewController: UIViewController {
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
 
-    @IBAction func didClickOnDoneButton(sender: UIBarButtonItem) {
+    @IBAction func didClickOnDoneButton(_ sender: UIBarButtonItem) {
     }
 
-    @IBAction func didClickOnCancelButton(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func didClickOnCancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 
 }
