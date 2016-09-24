@@ -1,4 +1,3 @@
-import Foundation
 
 extension Array {
     func insertionIndex(of elem: Element, isOrderedBefore: (Element, Element) -> Bool) -> Int {

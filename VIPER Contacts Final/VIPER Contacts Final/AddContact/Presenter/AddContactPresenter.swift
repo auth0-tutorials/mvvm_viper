@@ -1,4 +1,3 @@
-import Foundation
 
 class AddContactPresenter: AddContactPresenterProtocol, AddContactInteractorOutputProtocol {
     weak var view: AddContactViewProtocol?

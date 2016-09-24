@@ -1,4 +1,3 @@
-import Foundation
 
 class ContactListInteractor: ContactListInteractorInputProtocol {
     weak var presenter: ContactListInteractorOutputProtocol?
