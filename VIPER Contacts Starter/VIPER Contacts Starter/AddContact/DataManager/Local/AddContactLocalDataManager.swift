@@ -3,7 +3,6 @@
 // Copyright (c) YEAR AUTHOR. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 enum PersistenceError: Error {

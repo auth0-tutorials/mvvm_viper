@@ -3,7 +3,6 @@
 // Copyright (c) YEAR AUTHOR. All rights reserved.
 //
 
-import Foundation
 
 class AddContactPresenter: AddContactPresenterProtocol, AddContactInteractorOutputProtocol {
     weak var view: AddContactViewProtocol?

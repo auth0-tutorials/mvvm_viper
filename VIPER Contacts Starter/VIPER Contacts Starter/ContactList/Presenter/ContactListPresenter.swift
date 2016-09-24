@@ -1,4 +1,3 @@
-import Foundation
 
 class ContactListPresenter: ContactListPresenterProtocol {
     weak var view: ContactListViewProtocol?
