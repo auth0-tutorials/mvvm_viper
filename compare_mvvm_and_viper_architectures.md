@@ -102,6 +102,8 @@ A Contact has only these two fields, _firstName_ and _lastName_. A computed prop
 There are three files responsible for the view layer: the Main storyboard, with views already laid out in the starter project; the ContactsViewController, that displays the contacts list in a table view; and the AddContactViewController, with two labels and fields for setting up the first and last name of a new contact. Let's start with the code for ContactsViewController. Replace the **ContactsViewController.swift** file with the following code.
 
 ```swift
+import UIKit
+
 class ContactsViewController: UIViewController {
 
     @IBOutlet var tableView: UITableView!
