@@ -605,13 +605,62 @@ Lock is available on [CocoaPods](https://cocoapods.org/). [Create a new project 
 pod 'Lock', '~> 1.27'
 ```
 
-### Step 3
-Create a new file named Auth0.plist. In both Auth0.plist and Info.plist files, add the following two string entries:
+Don't forget to add `import Lock` to every necessary file.
+
+### Step 2
+Create a new file named Auth0.plist. In both Auth0.plist and Info.plist files, add the following string entries:
 
 * **Auth0ClientId**: The client ID of your Auth0 application.
 * **Auth0Domain**: Your Auth0 account domain.
 
 These values can be found in the [client dashboard](https://app.auth0.com/#/applications). 
+
+### Step 2
+Set up your AppDelegate class with the following code:
+
+```swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    A0Lock.sharedLock().applicationLaunchedWithOptions(launchOptions)
+    return true
+}
+```
+
+```swift
+func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    return A0Lock.sharedLock().handleURL(url, sourceApplication: sourceApplication)
+}
+```
+
+```swift
+func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    return A0Lock.sharedLock().continueUserActivity(userActivity, restorationHandler:restorationHandler)
+}
+```
+
+### Step 3
+`A0LockViewController` will handle Email/Password, Enterprise & Social authentication based on your Application's connections enabled in your Auth0's Dashboard.
+
+First instantiate A0LockViewController and register the authentication callback that will receive the authenticated user's credentials. Finally present it as a modal view controller:
+
+```swift
+let lock = A0Lock.sharedLock()
+let controller = lock.newLockViewController()
+controller.closable = true
+
+controller.onAuthenticationBlock = {(profile, token) in
+    // Do something with token & profile. e.g.: save them.
+    // Lock will not save the Token and the profile for you.
+    // And dismiss the UIViewController.
+    self.dismissViewControllerAnimated(true, completion: nil)
+}
+lock.presentLockController(controller, fromController: self)
+```
+
+Then you'll see a beautiful and customizable login screen:
+
+![](img/auth0-login-screen.png)
+
+And that's it - your integration is done in just a few minutes.
 
 
 ## Conclusion
