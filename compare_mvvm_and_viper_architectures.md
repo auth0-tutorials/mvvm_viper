@@ -589,7 +589,7 @@ It's quite easy to integrate Auth0 Lock to an iOS project, as we will see in the
 If you don't already have any Auth0 account, [sign up](https://auth0.com/signup) for one now to follow along with the other steps. Also, create a new client in the dashboard - it's pretty easy and straightforward.
 
 ### Step 1
-Lock is available on [CocoaPods](https://cocoapods.org/). [Create a new project with CocoaPods](https://guides.cocoapods.org/) or use an existing one. Then add the following line to your Podfile:
+Lock is available on [CocoaPods](https://cocoapods.org/) and [Carthage](https://github.com/Carthage/Carthage). [Create a new project with CocoaPods](https://guides.cocoapods.org/) or use an existing one. Then add the following line to your Podfile:
 
 ```ruby
 pod 'Lock', '~> 1.27'
